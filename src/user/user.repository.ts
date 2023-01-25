@@ -1,9 +1,9 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { SignupReqDto, LoginResDto } from './dtos';
+import { SignupReqDto, LoginResDto } from '../auth/dtos';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
-import { SignUpSuccessResult } from './types/signup-success-result';
+import { SignUpSuccessResult } from '../auth/types/signup-success-result';
 import { IUserRepository } from './types/user-repository';
 
 @Injectable()

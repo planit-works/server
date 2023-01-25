@@ -1,8 +1,11 @@
+import { Profile } from './profile/entities/profile.entity';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
-import { User } from './auth/entities/user.entity';
+import { User } from './user/entities/user.entity';
+import { UserModule } from './user/user.module';
+import { ProfileModule } from './profile/profile.module';
 
 @Module({
   imports: [
@@ -18,11 +21,13 @@ import { User } from './auth/entities/user.entity';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [User],
+      entities: [User, Profile],
       synchronize: true,
       logging: true,
     }),
+    UserModule,
     AuthModule,
+    ProfileModule,
   ],
 })
 export class AppModule {}
