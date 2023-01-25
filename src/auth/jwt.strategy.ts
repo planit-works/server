@@ -9,7 +9,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(private userRepository: UserRepository) {
     super({
       secretOrKey: process.env.JWT_SECRET,
-      //   jwtFromRequest: ExtractJwt.fromHeader('Authorization'),
       jwtFromRequest: ExtractJwt.fromExtractors([
         function (req) {
           let token = null;
