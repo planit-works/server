@@ -12,6 +12,7 @@ import { User } from '../user/entities/user.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './jwt.strategy';
+import { AuthVerifyController } from './controllers/auth-verify.controller';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { JwtStrategy } from './jwt.strategy';
     AuthSignupController,
     AuthLoginController,
     AuthLogoutController,
+    AuthVerifyController,
   ],
   providers: [AuthSignupService, AuthLoginService, UserRepository, JwtStrategy],
   exports: [JwtStrategy, PassportModule],
