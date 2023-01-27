@@ -24,11 +24,10 @@ export class AuthLoginController {
   ) {
     const userId = await this.authLoginService.login(loginDto);
     const payload = { userId };
-    const accessToken = this.jwtService.sign(payload);
-    response.setHeader('Set-Cookie', [
-      `JWT=${accessToken}; HttpOnly; path=/`,
-      `Authorization=${accessToken}; HttpOnly; path=/`,
-    ]);
+    const accessToken = this.jwtService.sign(payload, {
+      secret: process.env.JWT_SECRET,
+      expiresIn: process.env.JWT_EXPIRES_IN,
+    });
     response.cookie('Authorization', accessToken, { httpOnly: true });
     return userId;
   }
