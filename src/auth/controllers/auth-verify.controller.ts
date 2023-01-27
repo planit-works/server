@@ -2,8 +2,8 @@ import { CookieUserInfo } from './../types/cookie-user';
 import { LoginResDto } from './../dtos/login.res.dto';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Controller, Get, HttpCode, UseGuards } from '@nestjs/common';
-import { Serialize } from '../../interceptors/serialize.interceptor';
-import { Cookies } from '../../decorators/get-user.decorator';
+import { Serialize } from '../../common/interceptors/serialize.interceptor';
+import { Cookies } from '../../common/decorators/get-user.decorator';
 import { AuthGuard } from '@nestjs/passport';
 
 @Controller('auth')
