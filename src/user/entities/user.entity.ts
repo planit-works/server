@@ -25,7 +25,7 @@ export class User {
   @Column()
   password: string;
 
-  @OneToOne(() => Profile)
-  @JoinColumn()
-  profile: Profile;
+  // @OneToOne(() => Profile)
+  // @JoinColumn()
+  // profile: Profile;
 }

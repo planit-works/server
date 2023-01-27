@@ -13,7 +13,7 @@ export class UserRepository implements IUserRepository {
     private readonly user: Repository<User>,
   ) {}
 
-  public create = async (signupDto: SignupReqDto): Promise<LoginResDto> => {
+  public create = async (signupDto: SignupReqDto): Promise<User> => {
     const user = this.user.create(signupDto);
     let result: SignUpSuccessResult;
     try {
@@ -23,7 +23,7 @@ export class UserRepository implements IUserRepository {
         throw new ConflictException('존재하는 이메일');
       }
     }
-    return { userId: result.id, avatarUrl: 'testUrl' };
+    return result;
   };
 
   public findById = async (id: number) => {
