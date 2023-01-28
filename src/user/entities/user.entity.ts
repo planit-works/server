@@ -13,7 +13,6 @@ import {
 export class User {
   @PrimaryGeneratedColumn({
     type: 'bigint',
-    unsigned: true,
   })
   id: number;
 
@@ -25,7 +24,7 @@ export class User {
   @Column()
   password: string;
 
-  // @OneToOne(() => Profile)
-  // @JoinColumn()
-  // profile: Profile;
+  @OneToOne(() => Profile, { eager: true })
+  @JoinColumn()
+  profile: Profile;
 }

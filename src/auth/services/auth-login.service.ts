@@ -1,5 +1,5 @@
 import { UserFindByEmailService } from '../../user/services/user-find-by-email.service';
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { LoginReqDto } from '../dtos';
 
@@ -11,8 +11,8 @@ export class AuthLoginService {
     const { email, password } = loginDto;
     const user = await this.userFindByEmailService.findByEmail(email);
     if (!user || !(await bcrypt.compare(password, user.password))) {
-      throw new UnauthorizedException('이메일/비밀번호 재확인');
+      throw new BadRequestException('이메일/비밀번호 재확인');
     }
-    return user.id;
+    return user;
   };
 }

@@ -17,6 +17,11 @@ describe('AuthSignupService 테스트', () => {
           id: 1,
           email: signupReqDto.email,
           password: signupReqDto.password,
+          profile: {
+            id: 1,
+            nickname: 'kku',
+            avatarUrl: 'testUrl',
+          },
         }),
     };
 
@@ -54,10 +59,18 @@ describe('AuthSignupService 테스트', () => {
 
   it('사용 중인 이메일일 경우 400 에러를 반환한다.', async () => {
     fakeUserFindByEmailService.findByEmail = (email: string) => {
-      return Promise.resolve({ id: 1, email: 'a', password: '1' });
+      return Promise.resolve({
+        id: 1,
+        email: 'a',
+        password: '1',
+        profile: { id: 2, nickname: 'kku', avatarUrl: 'testUrl' },
+      });
     };
     await expect(
-      service.signup({ email: 'asdf@asdf.com', password: 'asdf' }),
+      service.signup({
+        email: 'asdf@asdf.com',
+        password: 'asdf',
+      }),
     ).rejects.toThrow(BadRequestException);
   });
 });
