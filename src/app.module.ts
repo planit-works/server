@@ -21,6 +21,8 @@ import { ProfileModule } from './profile/profile.module';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
+      poolSize: 0,
+      connectTimeoutMS: 0,
       entities: [User, Profile],
       synchronize: true,
       logging: true,

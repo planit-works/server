@@ -5,7 +5,7 @@ export class Profile {
   @PrimaryGeneratedColumn()
   id: number;
 
-  // @Column({ dafault: '익명의 사용자' })
+  @Column({ default: '익명의 사용자' })
   nickname: string;
 
   @Column({ default: 'avatar/testurl' })
