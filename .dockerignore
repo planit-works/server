@@ -1,0 +1,11 @@
+# Docker
+Dockerfile
+
+# Compliled Output
+node_modules
+
+# Environment
+.env.test
+
+# Git
+.git
