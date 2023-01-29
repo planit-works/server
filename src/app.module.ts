@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { User } from './user/entities/user.entity';
 import { UserModule } from './user/user.module';
 import { ProfileModule } from './profile/profile.module';
+import { AppController } from './app.controller';
 import * as cookieParser from 'cookie-parser';
 
 @Module({
@@ -34,23 +35,11 @@ import * as cookieParser from 'cookie-parser';
         };
       },
     }),
-    // TypeOrmModule.forRoot({
-    //   type: 'postgres',
-    //   host: process.env.DB_HOST,
-    //   port: +process.env.DB_PORT,
-    //   username: process.env.DB_USERNAME,
-    //   password: process.env.DB_PASSWORD,
-    //   database: process.env.DB_DATABASE,
-    //   poolSize: 0,
-    //   connectTimeoutMS: 0,
-    //   entities: [User, Profile],
-    //   synchronize: true,
-    //   logging: true,
-    // }),
     UserModule,
     AuthModule,
     ProfileModule,
   ],
+  controllers: [AppController],
   providers: [
     {
       provide: APP_PIPE,
