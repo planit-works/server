@@ -1,4 +1,4 @@
-import { CookieUserInfo } from './../types/cookie-user';
+import { CookieUserInfo } from '../../common/types/cookie-user';
 import { LoginResDto } from './../dtos/login.res.dto';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Controller, Get, HttpCode, UseGuards } from '@nestjs/common';
@@ -18,7 +18,6 @@ export class AuthVerifyController {
   @UseGuards(AuthGuard())
   @HttpCode(200)
   async login(@Cookies('user') user: CookieUserInfo) {
-    console.log(user);
-    return { userId: user.id };
+    return { userId: user.userId };
   }
 }

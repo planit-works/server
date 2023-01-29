@@ -23,7 +23,7 @@ export class AuthLoginController {
     @Res({ passthrough: true }) response: Response,
   ): Promise<LoginResDto> {
     const user = await this.authLoginService.login(loginDto);
-    const payload = { userId: user.id };
+    const payload = { userId: user.id, profileId: user.profile.id };
     const accessToken = this.jwtService.sign(payload, {
       secret: process.env.JWT_SECRET,
       expiresIn: process.env.JWT_EXPIRES_IN,
