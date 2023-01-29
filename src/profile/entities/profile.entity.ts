@@ -8,6 +8,6 @@ export class Profile {
   @Column({ default: '익명의 사용자' })
   nickname: string;
 
-  @Column({ default: 'avatar/testurl' })
+  @Column({ default: 'avatars/default' })
   avatarUrl: string;
 }

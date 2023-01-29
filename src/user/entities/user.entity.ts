@@ -11,9 +11,7 @@ import {
 @Entity()
 @Unique(['email'])
 export class User {
-  @PrimaryGeneratedColumn({
-    type: 'bigint',
-  })
+  @PrimaryGeneratedColumn({})
   id: number;
 
   @Column({
