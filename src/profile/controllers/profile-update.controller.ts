@@ -1,10 +1,10 @@
 import { AuthGuard } from '@nestjs/passport';
-import { CookieUserInfo } from '../../common/types/cookie-user';
 import { ProfileUpdateReqDto } from './../dto/update-profile.dto';
 import { ProfileUpdateService } from './../services/profile-update.service';
 import { Controller, Patch, HttpCode, Body, UseGuards } from '@nestjs/common';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { Cookies } from '../../common/decorators/get-user.decorator';
+import { CurrentUser } from '../../common/decorators/current-user.decorator';
+import { User } from '../../user/entities/user.entity';
 
 @Controller('users')
 export class ProfileUpdateController {
@@ -17,9 +17,9 @@ export class ProfileUpdateController {
   @HttpCode(204)
   updateProfile(
     @Body() profileUpdateReqDto: ProfileUpdateReqDto,
-    @Cookies('user') user: CookieUserInfo,
+    @CurrentUser('user') currentUser: User,
   ) {
-    const profileId = user.profileId;
+    const profileId = currentUser.profileId;
     return this.profileUpdateService.update(profileId, profileUpdateReqDto);
   }
 }

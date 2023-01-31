@@ -25,4 +25,7 @@ export class User {
   @OneToOne(() => Profile, { eager: true })
   @JoinColumn()
   profile: Profile;
+
+  @Column()
+  profileId: number;
 }

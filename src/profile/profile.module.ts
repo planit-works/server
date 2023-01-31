@@ -1,5 +1,4 @@
 import { JwtModule } from '@nestjs/jwt';
-import { JwtStrategy } from './../auth/jwt.strategy';
 import { PassportModule } from '@nestjs/passport';
 import { ProfileRepository } from './profile.repository';
 import { Profile } from './entities/profile.entity';
