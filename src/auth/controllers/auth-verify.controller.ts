@@ -1,10 +1,10 @@
-import { CookieUserInfo } from '../../common/types/cookie-user';
 import { LoginResDto } from './../dtos/login.res.dto';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Controller, Get, HttpCode, UseGuards } from '@nestjs/common';
 import { Serialize } from '../../common/interceptors/serialize.interceptor';
-import { Cookies } from '../../common/decorators/get-user.decorator';
+import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { AuthGuard } from '@nestjs/passport';
+import { User } from '../../user/entities/user.entity';
 
 @Controller('auth')
 export class AuthVerifyController {
@@ -17,7 +17,8 @@ export class AuthVerifyController {
   @Get('verify')
   @UseGuards(AuthGuard())
   @HttpCode(200)
-  async login(@Cookies('user') user: CookieUserInfo) {
-    return { userId: user.userId };
+  @Serialize(LoginResDto)
+  async login(@CurrentUser('user') currentUser: User) {
+    return currentUser;
   }
 }
