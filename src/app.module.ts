@@ -1,3 +1,5 @@
+import { TodoModule } from './todo/todo.module';
+import { Todo } from './todo/entities/todo.entity';
 import { MiddlewareConsumer, Module, ValidationPipe } from '@nestjs/common';
 import { APP_PIPE } from '@nestjs/core';
 import { Profile } from './profile/entities/profile.entity';
@@ -29,16 +31,17 @@ import * as cookieParser from 'cookie-parser';
           database: configService.get('DB_DATABASE'),
           poolSize: 0,
           connectTimeoutMS: 0,
-          entities: [User, Profile],
+          entities: [User, Profile, Todo],
           synchronize: true,
           logging:
-            configService.get('NODE_ENV') !== 'production' ? false : true,
+            configService.get('NODE_ENV') !== 'production' ? true : false,
         };
       },
     }),
     UserModule,
     AuthModule,
     ProfileModule,
+    TodoModule,
   ],
   controllers: [AppController],
   providers: [
