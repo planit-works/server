@@ -5,7 +5,7 @@ import * as request from 'supertest';
 
 describe('Authentication E2E 테스트', () => {
   let app: INestApplication;
-  const email = 'test1243@gmail.com';
+  const email = 'test1265@gmail.com';
   const password = 'test1234!';
 
   beforeEach(async () => {
@@ -17,7 +17,7 @@ describe('Authentication E2E 테스트', () => {
     await app.init();
   });
 
-  test('정상적인 회원가입 요청 시 201 상태코드를 반환한다.', () => {
+  test('정상적인 회원가입 요청 시 201 상태코드를 반환한다.', async () => {
     return request(app.getHttpServer())
       .post('/auth')
       .send({ email, password })
@@ -25,11 +25,13 @@ describe('Authentication E2E 테스트', () => {
       .then((res) => {
         const { userId, avatarUrl } = res.body;
         expect(userId).toBeGreaterThanOrEqual(1);
-        expect(avatarUrl).toEqual('avatars/default');
+        expect(avatarUrl).toEqual(
+          'https://d2pkj6jz1ow9ba.cloudfront.net/avatars/default',
+        );
       });
   });
 
-  test('이미 가입된 이메일에 대해 400 상태코드를 반환한다', () => {
+  test('이미 가입된 이메일에 대해 400 상태코드를 반환한다', async () => {
     return request(app.getHttpServer())
       .post('/auth')
       .send({ email, password })

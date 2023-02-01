@@ -31,7 +31,8 @@ import * as cookieParser from 'cookie-parser';
           connectTimeoutMS: 0,
           entities: [User, Profile],
           synchronize: true,
-          logging: process.env.NODE_ENV === 'production' ? true : false,
+          logging:
+            configService.get('NODE_ENV') !== 'production' ? false : true,
         };
       },
     }),
