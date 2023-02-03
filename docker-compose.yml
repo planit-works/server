@@ -1,11 +1,24 @@
 version: '3.1'
 
 services:
+  # server:
+  #   image: node:18.13
+  #   container_name: api-server
+  #   restart: always
+  #   env_file:
+  #     - .env.production
+  #   ports:
+  #     - 8000:8000
+  #   volumes:
+  #     - .:/side-project
+  #   depends_on: db
+  #   command: ['nest', 'start']
+
   db:
     image: postgres:14.6
     restart: always
     env_file:
-      - ./.env.development
+      - ./.db.env
     ports:
       - 15432:5432
     volumes:

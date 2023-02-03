@@ -11,10 +11,7 @@ import {
 @Entity()
 @Unique(['email'])
 export class User {
-  @PrimaryGeneratedColumn({
-    type: 'bigint',
-    unsigned: true,
-  })
+  @PrimaryGeneratedColumn({})
   id: number;
 
   @Column({
@@ -25,7 +22,10 @@ export class User {
   @Column()
   password: string;
 
-  // @OneToOne(() => Profile)
-  // @JoinColumn()
-  // profile: Profile;
+  @OneToOne(() => Profile, { cascade: true, eager: true })
+  @JoinColumn()
+  profile: Profile;
+
+  @Column()
+  profileId: number;
 }

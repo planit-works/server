@@ -31,6 +31,6 @@ import { AuthVerifyController } from './controllers/auth-verify.controller';
     AuthVerifyController,
   ],
   providers: [AuthSignupService, AuthLoginService, UserRepository, JwtStrategy],
-  exports: [JwtStrategy, PassportModule],
+  exports: [PassportModule],
 })
 export class AuthModule {}

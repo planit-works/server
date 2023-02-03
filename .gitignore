@@ -1,15 +1,19 @@
-# compiled output
+# Compiled Output
 /dist
 /node_modules
 
 # Environment
 .env.*
+.db.env
 
 # Setting
 .vscode
 
 # Database
 db_data
+
+# Docker
+Dockerfile
 
 # Logs
 logs
