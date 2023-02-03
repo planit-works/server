@@ -13,7 +13,11 @@ export class UserRepository implements IUserRepository {
   ) {}
 
   public create = async (createUserDto: CreateUserDto): Promise<User> => {
-    const user = this.user.create(createUserDto);
+    const { email, password } = createUserDto;
+    const user = this.user.create({ email, password });
+
+    user.profileId = createUserDto.profileId;
+
     const result = await this.user.save(user);
     return result;
   };

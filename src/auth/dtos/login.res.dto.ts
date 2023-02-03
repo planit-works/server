@@ -8,12 +8,11 @@ export class LoginResDto {
   userId: number;
 
   @ApiProperty({
-    example: 'https://d2pkj6jz1ow9ba.cloudfront.net/avatars/112309812390',
+    example: 'https://d2pkj6jz1ow9ba.cloudfront.net/avatars/default',
     description: '유저 프로필 사진 Url',
   })
   @Transform(
-    ({ obj }) =>
-      `https://d2pkj6jz1ow9ba.cloudfront.net/${obj.profile.avatarUrl}`,
+    ({ obj }) => `https://d2pkj6jz1ow9ba.cloudfront.net/${obj.avatarUrl}`,
   )
   @Expose()
   avatarUrl: string;

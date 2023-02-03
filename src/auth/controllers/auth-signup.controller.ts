@@ -20,14 +20,14 @@ export class AuthSignupController {
   async signup(
     @Body() signupDto: SignupReqDto,
     @Res({ passthrough: true }) response: Response,
-  ): Promise<LoginResDto> {
+  ) {
     const user = await this.authSingupService.signup(signupDto);
-    const payload = { userId: user.id, profileId: user.profile.id };
+    const payload = { userId: user.id };
     const accessToken = this.jwtService.sign(payload, {
       secret: process.env.JWT_SECRET,
       expiresIn: process.env.JWT_EXPIRES_IN,
     });
     response.cookie('Authorization', accessToken, { httpOnly: true });
-    return { userId: user.id, avatarUrl: user.profile.avatarUrl };
+    return user;
   }
 }

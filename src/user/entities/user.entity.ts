@@ -22,7 +22,7 @@ export class User {
   @Column()
   password: string;
 
-  @OneToOne(() => Profile, { eager: true })
+  @OneToOne(() => Profile, { cascade: true, eager: true })
   @JoinColumn()
   profile: Profile;
 

@@ -12,6 +12,10 @@ export class UserCreateService {
 
   public async create(signupReqDto: SignupReqDto) {
     const profile = await this.profileCreateService.create();
-    return await this.userRepository.create({ ...signupReqDto, profile });
+    return await this.userRepository.create({
+      ...signupReqDto,
+      profile,
+      profileId: profile.id,
+    });
   }
 }

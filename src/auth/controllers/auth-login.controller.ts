@@ -1,3 +1,4 @@
+import { User } from './../../user/entities/user.entity';
 import { Controller, Post, Body, HttpCode, Res } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
@@ -21,14 +22,14 @@ export class AuthLoginController {
   async login(
     @Body() loginDto: LoginReqDto,
     @Res({ passthrough: true }) response: Response,
-  ): Promise<LoginResDto> {
+  ): Promise<User> {
     const user = await this.authLoginService.login(loginDto);
-    const payload = { userId: user.id, profileId: user.profile.id };
+    const payload = { userId: user.id };
     const accessToken = this.jwtService.sign(payload, {
       secret: process.env.JWT_SECRET,
       expiresIn: process.env.JWT_EXPIRES_IN,
     });
     response.cookie('Authorization', accessToken, { httpOnly: true });
-    return { userId: user.id, avatarUrl: user.profile.avatarUrl };
+    return user;
   }
 }
