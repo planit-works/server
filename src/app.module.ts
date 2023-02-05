@@ -32,9 +32,10 @@ import * as cookieParser from 'cookie-parser';
           poolSize: 0,
           connectTimeoutMS: 0,
           entities: [User, Profile, Todo],
-          synchronize: true,
+          synchronize:
+            configService.get('NODE_ENV') === 'development' ? true : false,
           logging:
-            configService.get('NODE_ENV') !== 'production' ? true : false,
+            configService.get('NODE_ENV') === 'development' ? true : false,
         };
       },
     }),
