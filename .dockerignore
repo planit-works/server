@@ -3,9 +3,25 @@ Dockerfile
 
 # Compliled Output
 node_modules
+dist
 
 # Environment
+.env.development
 .env.test
 
 # Git
 .git
+
+# Test
+coverage
+test
+
+# Database
+db_data
+
+# IDE
+.vscode
+
+# Document
+docs
+
