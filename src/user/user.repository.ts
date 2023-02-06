@@ -1,4 +1,4 @@
-import { CreateUserDto } from './dto/create-user.dto';
+import { CreateUserDao } from './daos/create-user.dao';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -12,23 +12,31 @@ export class UserRepository implements IUserRepository {
     private readonly user: Repository<User>,
   ) {}
 
-  public create = async (createUserDto: CreateUserDto): Promise<User> => {
-    const { email, password } = createUserDto;
+  public create = async (createUserDao: CreateUserDao): Promise<User> => {
+    const { email, password } = createUserDao;
     const user = this.user.create({ email, password });
 
-    user.profileId = createUserDto.profileId;
+    user.profile = createUserDao.profile;
 
     const result = await this.user.save(user);
     return result;
   };
 
   public findById = async (id: number) => {
-    const user = this.user.findOneBy({ id });
+    const user = await this.user.findOne({
+      where: { id },
+      relations: {
+        profile: true,
+      },
+    });
     return user;
   };
 
   public findByEmail = async (email: string) => {
-    const user = this.user.findOneBy({ email });
+    const user = await this.user.findOne({
+      where: { email },
+      relations: { profile: true },
+    });
     return user;
   };
 }

@@ -15,7 +15,6 @@ export class UserCreateService {
     return await this.userRepository.create({
       ...signupReqDto,
       profile,
-      profileId: profile.id,
     });
   }
 }

@@ -19,6 +19,6 @@ import { ProfileUpdateService } from './services/profile-update.service';
   ],
   controllers: [ProfileUpdateController],
   providers: [ProfileCreateService, ProfileUpdateService, ProfileRepository],
-  exports: [ProfileCreateService],
+  exports: [TypeOrmModule, ProfileCreateService],
 })
 export class ProfileModule {}
