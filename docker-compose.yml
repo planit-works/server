@@ -1,25 +1,25 @@
 version: '3.8'
 
 services:
-  server:
-    build: ./
-    container_name: api-server
-    restart: always
-    env_file:
-      - .env.production
-    ports:
-      - 8000:8000
-    volumes:
-      - ./:/server
-    # depends_on: db
-    command: ['npm', 'start']
-
-  # db:
-  #   image: postgres:14.6
+  # server:
+  #   build: ./
+  #   container_name: api-server
   #   restart: always
   #   env_file:
-  #     - ./.db.env
+  #     - .env.production
   #   ports:
-  #     - 15432:5432
+  #     - 8000:8000
   #   volumes:
-  #     - ./db_data:/var/lib/postgresql/data
+  #     - ./:/server
+  #   # depends_on: db
+  #   command: ['npm', 'start']
+
+  db:
+    image: postgres:14.6
+    restart: always
+    env_file:
+      - ./.db.env
+    ports:
+      - 15432:5432
+    volumes:
+      - /var/db_data:/var/lib/postgresql/data
