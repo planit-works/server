@@ -8,6 +8,9 @@ export class Todo {
   @PrimaryColumn()
   userId: number;
 
-  @Column({ type: 'text' })
-  todos: string;
+  @PrimaryColumn({ type: 'varchar' })
+  title: string;
+
+  @Column({ type: 'boolean' })
+  done: boolean;
 }
