@@ -1,4 +1,3 @@
-import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { ProfileRepository } from './profile.repository';
 import { Profile } from './entities/profile.entity';
@@ -12,10 +11,6 @@ import { ProfileUpdateService } from './services/profile-update.service';
   imports: [
     TypeOrmModule.forFeature([Profile]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
-    JwtModule.register({
-      secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: process.env.JWT_EXPIRES_IN },
-    }),
   ],
   controllers: [ProfileUpdateController],
   providers: [ProfileCreateService, ProfileUpdateService, ProfileRepository],

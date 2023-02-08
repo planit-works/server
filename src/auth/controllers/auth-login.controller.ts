@@ -1,3 +1,4 @@
+import { TokenPayload } from './../types/token-payload';
 import { User } from './../../user/entities/user.entity';
 import { Controller, Post, Body, HttpCode, Res } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -24,10 +25,9 @@ export class AuthLoginController {
     @Res({ passthrough: true }) response: Response,
   ): Promise<User> {
     const user = await this.authLoginService.login(loginDto);
-    const payload = { userId: user.id };
+    const payload: TokenPayload = { sub: user.id };
     const accessToken = this.jwtService.sign(payload, {
       secret: process.env.JWT_SECRET,
-      expiresIn: process.env.JWT_EXPIRES_IN,
     });
     response.cookie('Authorization', accessToken, { httpOnly: true });
     return user;
