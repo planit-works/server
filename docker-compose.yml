@@ -1,25 +1,30 @@
 version: '3.8'
 
 services:
-  # server:
-  #   build: ./
-  #   container_name: api-server
-  #   restart: always
-  #   env_file:
-  #     - .env.production
-  #   ports:
-  #     - 8000:8000
-  #   volumes:
-  #     - ./:/server
-  #   # depends_on: db
-  #   command: ['npm', 'start']
+  nginx:
+    build:
+      context: .
+      dockerfile: dockerfiles/nginx.dockerfile
+    depends_on:
+      - server
 
-  db:
-    image: postgres:14.6
+  server:
+    build:
+      context: .
+      dockerfile: dockerfiles/api-server.dockerfile
+    container_name: api-server
     restart: always
     env_file:
-      - ./.db.env
+      - .env.production
     ports:
-      - 15432:5432
+      - 8000:8000
     volumes:
-      - /var/db_data:/var/lib/postgresql/data
+      - ./:/server
+    command: ['npm', 'start']
+
+  npm:
+    image: node:18.14
+    working_dir: /server
+    entrypoint: ['npm']
+    volumes:
+      - ./src:/server
