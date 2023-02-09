@@ -15,7 +15,7 @@ module.exports = {
     node: true,
     jest: true,
   },
-  ignorePatterns: ['.eslintrc.js'],
+  ignorePatterns: ['.eslintrc.js', '*.e2e-spec.ts'],
   rules: {
     'no-console': 'warn',
     '@typescript-eslint/interface-name-prefix': 'off',
