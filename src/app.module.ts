@@ -1,4 +1,3 @@
-import { TodoModule } from './todo/todo.module';
 import { MiddlewareConsumer, Module, ValidationPipe } from '@nestjs/common';
 import { APP_PIPE } from '@nestjs/core';
 import { ConfigModule } from '@nestjs/config';
@@ -21,7 +20,6 @@ import { ormConfig } from './orm.config';
     UserModule,
     AuthModule,
     ProfileModule,
-    TodoModule,
   ],
   controllers: [AppController],
   providers: [
