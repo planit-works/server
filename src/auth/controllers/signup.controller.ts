@@ -1,15 +1,18 @@
 import { JwtService } from '@nestjs/jwt';
-import { Controller, Post, Body, Res } from '@nestjs/common';
+import { Controller, Post, Body, Res, Inject } from '@nestjs/common';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { AuthSignupService } from '../services/auth-signup.service';
+import { SignupService } from '../services';
 import { LoginResDto, SignupReqDto } from '../dtos';
 import { Serialize } from '../../common/interceptors/serialize.interceptor';
 import { Response } from 'express';
+import { SignupInboundPort } from '../inbound-port/signup.inbound-port';
+import { User } from '../../user/entities/user.entity';
 
 @Controller('auth')
-export class AuthSignupController {
+export class SignupController {
   constructor(
-    private readonly authSingupService: AuthSignupService,
+    @Inject(SignupService)
+    private readonly singupInboundPort: SignupInboundPort,
     private jwtService: JwtService,
   ) {}
 
@@ -20,8 +23,8 @@ export class AuthSignupController {
   async signup(
     @Body() signupDto: SignupReqDto,
     @Res({ passthrough: true }) response: Response,
-  ) {
-    const user = await this.authSingupService.signup(signupDto);
+  ): Promise<User> {
+    const user = await this.singupInboundPort.execute(signupDto);
     const payload = { userId: user.id };
     const accessToken = this.jwtService.sign(payload, {
       secret: process.env.JWT_SECRET,

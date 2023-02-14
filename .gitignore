@@ -11,6 +11,7 @@
 
 # Database
 db_data
+orm.config.ts
 
 # Docker
 Dockerfile

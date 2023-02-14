@@ -1,16 +1,19 @@
+import { LoginInboundPort } from './../inbound-port/login.inbound-port';
+import { TokenPayload } from './../types/token-payload';
 import { User } from './../../user/entities/user.entity';
-import { Controller, Post, Body, HttpCode, Res } from '@nestjs/common';
+import { Controller, Post, Body, HttpCode, Res, Inject } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Response } from 'express';
-import { AuthLoginService } from '../services/auth-login.service';
+import { LoginService } from '../services/login.service';
 import { LoginReqDto, LoginResDto } from '../dtos';
 import { Serialize } from '../../common/interceptors/serialize.interceptor';
 
 @Controller('auth')
-export class AuthLoginController {
+export class LoginController {
   constructor(
-    private readonly authLoginService: AuthLoginService,
+    @Inject(LoginService)
+    private readonly loginInboundPort: LoginInboundPort,
     private jwtService: JwtService,
   ) {}
 
@@ -23,11 +26,10 @@ export class AuthLoginController {
     @Body() loginDto: LoginReqDto,
     @Res({ passthrough: true }) response: Response,
   ): Promise<User> {
-    const user = await this.authLoginService.login(loginDto);
-    const payload = { userId: user.id };
+    const user = await this.loginInboundPort.execute(loginDto);
+    const payload: TokenPayload = { sub: user.id };
     const accessToken = this.jwtService.sign(payload, {
       secret: process.env.JWT_SECRET,
-      expiresIn: process.env.JWT_EXPIRES_IN,
     });
     response.cookie('Authorization', accessToken, { httpOnly: true });
     return user;

@@ -19,7 +19,7 @@ export function Serialize(dto: ClassConstructor) {
 export class SerializeInterceptor implements NestInterceptor {
   constructor(private dto: ClassConstructor) {}
   intercept(
-    context: ExecutionContext,
+    _: ExecutionContext,
     next: CallHandler<any>,
   ): Observable<any> | Promise<Observable<any>> {
     // request 핸들러가 작동하기 전에 실행되는 코드 -> pre-middleware

@@ -9,7 +9,7 @@ export class AuthLogoutController {
   @Post('logout')
   @HttpCode(204)
   async logout(@Res({ passthrough: true }) response: Response) {
-    response.cookie('Authorization', '', { httpOnly: true, maxAge: 0 });
+    response.cookie('Authorization', '', { maxAge: 0 });
     return;
   }
 }

@@ -1,7 +1,7 @@
+import { TokenPayload } from './types/token-payload';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { User } from '../user/entities/user.entity';
 import { UserRepository } from '../user/user.repository';
 
 @Injectable()
@@ -22,13 +22,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload) {
-    const { userId } = payload;
-    const user: User = await this.userRepository.findById(+userId);
+  async validate(payload: TokenPayload) {
+    const { sub: userId } = payload;
+    const user = await this.userRepository.findById(userId);
     if (!user) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('인증이 필요한 유저');
     }
-
     return user;
   }
 }
