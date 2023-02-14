@@ -1,3 +1,4 @@
+import { User } from './../../entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
 import { Controller, Post, Body, Res, Inject } from '@nestjs/common';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
@@ -6,7 +7,6 @@ import { LoginResDto, SignupReqDto } from '../dtos';
 import { Serialize } from '../../common/interceptors/serialize.interceptor';
 import { Response } from 'express';
 import { SignupInboundPort } from '../inbound-port/signup.inbound-port';
-import { User } from '../../user/entities/user.entity';
 
 @Controller('auth')
 export class SignupController {

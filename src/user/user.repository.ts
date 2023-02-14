@@ -1,8 +1,8 @@
+import { User } from './../entities/user.entity';
 import { CreateUserDao } from './daos/create-user.dao';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from './entities/user.entity';
 import { IUserRepository } from './types/user.repository';
 
 @Injectable()

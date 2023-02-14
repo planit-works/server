@@ -8,6 +8,7 @@ import { ProfileModule } from './profile/profile.module';
 import { AppController } from './app.controller';
 import * as cookieParser from 'cookie-parser';
 import { ormConfig } from './orm.config';
+import { FollowModule } from './follow/follow.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { ormConfig } from './orm.config';
     UserModule,
     AuthModule,
     ProfileModule,
+    FollowModule,
   ],
   controllers: [AppController],
   providers: [

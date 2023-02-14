@@ -1,3 +1,5 @@
+import { User } from './../entities/user.entity';
+import { Profile } from './../entities/profile.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
 import { UserRepository } from './../user/user.repository';
@@ -15,8 +17,6 @@ import { JwtStrategy } from './jwt.strategy';
 import { CheckEmailDuplicateRepository } from './outbound-adapter/check-email-duplicate.repository';
 import { GetUserByEmailRepository } from './outbound-adapter/get-user-by-email.repository';
 import { CreateUserRepository } from './outbound-adapter/create-user.repository';
-import { Profile } from '../profile/entities/profile.entity';
-import { User } from '../user/entities/user.entity';
 
 @Module({
   imports: [

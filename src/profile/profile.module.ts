@@ -1,9 +1,8 @@
+import { Profile } from './../entities/profile.entity';
 import { PassportModule } from '@nestjs/passport';
 import { ProfileRepository } from './profile.repository';
-import { Profile } from './entities/profile.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
-import { ProfileCreateService } from './services/profile-create.service';
 import { ProfileUpdateController } from './controllers/profile-update.controller';
 import { ProfileUpdateService } from './services/profile-update.service';
 
@@ -13,7 +12,7 @@ import { ProfileUpdateService } from './services/profile-update.service';
     PassportModule.register({ defaultStrategy: 'jwt' }),
   ],
   controllers: [ProfileUpdateController],
-  providers: [ProfileCreateService, ProfileUpdateService, ProfileRepository],
-  exports: [TypeOrmModule, ProfileCreateService],
+  providers: [ProfileUpdateService, ProfileRepository],
+  exports: [TypeOrmModule],
 })
 export class ProfileModule {}

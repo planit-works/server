@@ -1,4 +1,4 @@
-import { Profile } from './../entities/profile.entity';
+import { Profile } from './../../entities/profile.entity';
 import { ProfileUpdateReqDto } from './../dto/update-profile.dto';
 
 export class IProfileRepository {

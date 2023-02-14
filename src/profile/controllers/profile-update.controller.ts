@@ -1,10 +1,10 @@
+import { User } from './../../entities/user.entity';
 import { AuthGuard } from '@nestjs/passport';
 import { ProfileUpdateReqDto } from './../dto/update-profile.dto';
 import { ProfileUpdateService } from './../services/profile-update.service';
 import { Controller, Patch, HttpCode, Body, UseGuards } from '@nestjs/common';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
-import { User } from '../../user/entities/user.entity';
 
 @Controller('users')
 export class ProfileUpdateController {
@@ -16,8 +16,8 @@ export class ProfileUpdateController {
   @UseGuards(AuthGuard())
   @HttpCode(204)
   updateProfile(
-    @Body() profileUpdateReqDto: ProfileUpdateReqDto,
     @CurrentUser('user') currentUser: User,
+    @Body() profileUpdateReqDto: ProfileUpdateReqDto,
   ) {
     const profileId = currentUser.profileId;
     return this.profileUpdateService.update(profileId, profileUpdateReqDto);

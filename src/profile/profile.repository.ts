@@ -1,9 +1,9 @@
+import { Profile } from './../entities/profile.entity';
 import { IProfileRepository } from './types/profile.repository';
 import { ProfileUpdateReqDto } from './dto/update-profile.dto';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Profile } from './entities/profile.entity';
 
 @Injectable()
 export class ProfileRepository implements IProfileRepository {

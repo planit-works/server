@@ -1,10 +1,10 @@
+import { User } from './../../entities/user.entity';
 import { LoginResDto } from './../dtos/login.res.dto';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Controller, Get, HttpCode, UseGuards } from '@nestjs/common';
 import { Serialize } from '../../common/interceptors/serialize.interceptor';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { AuthGuard } from '@nestjs/passport';
-import { User } from '../../user/entities/user.entity';
 
 @Controller('auth')
 export class AuthVerifyController {

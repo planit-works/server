@@ -1,6 +1,6 @@
+import { User } from './../../entities/user.entity';
 import { LoginInboundPort } from './../inbound-port/login.inbound-port';
 import { TokenPayload } from './../types/token-payload';
-import { User } from './../../user/entities/user.entity';
 import { Controller, Post, Body, HttpCode, Res, Inject } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';

@@ -1,15 +1,15 @@
-import { Profile } from './../../profile/entities/profile.entity';
+import { Profile } from './profile.entity';
+import { Follow } from './follow.entity';
 import {
   Column,
   Entity,
   JoinColumn,
   OneToOne,
   PrimaryGeneratedColumn,
-  Unique,
+  OneToMany,
 } from 'typeorm';
 
 @Entity()
-@Unique(['email'])
 export class User {
   @PrimaryGeneratedColumn({})
   id: number;
@@ -28,4 +28,10 @@ export class User {
 
   @Column()
   profileId: number;
+
+  @OneToMany(() => Follow, (follow) => follow.follower)
+  follower?: Follow[];
+
+  @OneToMany(() => Follow, (follow) => follow.following)
+  following?: Follow[];
 }
