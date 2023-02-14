@@ -18,9 +18,6 @@ class MockGetUserByEmailOutboundPort implements GetUserByEmailOutboundPort {
 
   async execute(email: string) {
     const user = this.users.find((user) => user.email === email);
-    if (!user) {
-      throw new BadRequestException();
-    }
     return Promise.resolve(user);
   }
 }
@@ -30,7 +27,7 @@ let hashedPassword: string;
 let users: User[];
 let password = 'test1234!';
 
-describe('AuthLoginService 테스트', () => {
+describe('LoginService 유닛 테스트', () => {
   beforeEach(async () => {
     hashedPassword = await bcrypt.hash(password, 12);
     users = [
