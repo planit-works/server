@@ -1,4 +1,4 @@
-import { GetUserByEmailRepository } from './../outbound-adapter/get-user-by-email.outbound-adapter';
+import { GetUserByEmailRepository } from './../outbound-adapter/get-user-by-email.repository';
 import { GetUserByEmailOutboundPort } from './../outbound-port/get-user-by-email.outbound-port';
 import {
   LoginInboundPort,

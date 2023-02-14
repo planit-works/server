@@ -1,24 +1,26 @@
-import { GetUserByEmailRepository } from './outbound-adapter/get-user-by-email.outbound-adapter';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
 import { UserRepository } from './../user/user.repository';
-import { UserModule } from './../user/user.module';
 import { Module } from '@nestjs/common';
 import {
-  AuthSignupController,
+  SignupController,
   LoginController,
   AuthLogoutController,
   AuthVerifyController,
 } from './controllers';
-import { AuthSignupService, LoginService } from './services';
+import { SignupService, LoginService } from './services';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './jwt.strategy';
+import { CheckEmailDuplicateRepository } from './outbound-adapter/check-email-duplicate.repository';
+import { GetUserByEmailRepository } from './outbound-adapter/get-user-by-email.repository';
+import { CreateUserRepository } from './outbound-adapter/create-user.repository';
+import { Profile } from '../profile/entities/profile.entity';
+import { User } from '../user/entities/user.entity';
 
 @Module({
   imports: [
-    UserModule,
-    TypeOrmModule,
+    TypeOrmModule.forFeature([User, Profile]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.registerAsync({
       inject: [ConfigService],
@@ -29,16 +31,18 @@ import { JwtStrategy } from './jwt.strategy';
     }),
   ],
   controllers: [
-    AuthSignupController,
+    SignupController,
     LoginController,
     AuthLogoutController,
     AuthVerifyController,
   ],
   providers: [
-    AuthSignupService,
+    SignupService,
     LoginService,
     UserRepository,
     GetUserByEmailRepository,
+    CheckEmailDuplicateRepository,
+    CreateUserRepository,
     JwtStrategy,
     JwtService,
   ],
