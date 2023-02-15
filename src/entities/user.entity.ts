@@ -7,11 +7,13 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
   OneToMany,
+  CreateDateColumn,
+  DeleteDateColumn,
 } from 'typeorm';
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn({})
+  @PrimaryGeneratedColumn()
   id: number;
 
   @Column({
@@ -29,9 +31,15 @@ export class User {
   @Column()
   profileId: number;
 
-  @OneToMany(() => Follow, (follow) => follow.follower)
-  follower?: Follow[];
+  @CreateDateColumn()
+  createdAt?: Date;
+
+  @DeleteDateColumn()
+  deletedAt?: Date;
 
   @OneToMany(() => Follow, (follow) => follow.following)
   following?: Follow[];
+
+  @OneToMany(() => Follow, (follow) => follow.follower)
+  followers?: Follow[];
 }

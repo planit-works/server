@@ -1,14 +1,20 @@
 import { Module } from '@nestjs/common';
-import { FollowUserController } from './controllers/follow-user.controller';
-import { FollowUserService } from './services/follow-user.service';
+import { FollowController } from './controllers/follow.controller';
+import { FollowService } from './services/follow.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from '../entities/user.entity';
 import { Follow } from '../entities/follow.entity';
+import { FollowRepository } from './outbound-adapter/follow.repository';
+import { CheckUserExistRepository } from './outbound-adapter/check-user-exist.repository';
+import { User } from '../entities/user.entity';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Follow, User])],
-  controllers: [FollowUserController],
-  providers: [FollowUserService],
+  imports: [
+    TypeOrmModule.forFeature([Follow, User]),
+    PassportModule.register({ defaultStrategy: 'jwt' }),
+  ],
+  controllers: [FollowController],
+  providers: [FollowService, FollowRepository, CheckUserExistRepository],
   exports: [],
 })
 export class FollowModule {}

@@ -1,6 +1,6 @@
-import { User } from './../entities/user.entity';
+import { User } from '../entities/user.entity';
 import { PassportModule } from '@nestjs/passport';
-import { ProfileModule } from './../profile/profile.module';
+import { ProfileModule } from '../profile/profile.module';
 // import { GetUserInterceptor } from './interceptors/get-user.interceptor';
 import { UserFindByEmailService } from './services/user-find-by-email.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
