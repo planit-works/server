@@ -1,9 +1,9 @@
-import { User } from './../../entities/user.entity';
+import { User } from '../../entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
 import { Controller, Post, Body, Res, Inject } from '@nestjs/common';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { SignupService } from '../services';
-import { LoginResDto, SignupReqDto } from '../dtos';
+import { SignupReqDto, SignupResDto } from '../dtos';
 import { Serialize } from '../../common/interceptors/serialize.interceptor';
 import { Response } from 'express';
 import { SignupInboundPort } from '../inbound-port/signup.inbound-port';
@@ -17,9 +17,13 @@ export class SignupController {
   ) {}
 
   @ApiOperation({ summary: '회원가입' })
-  @ApiResponse({ status: 201, description: '회원가입 성공', type: LoginResDto })
+  @ApiResponse({
+    status: 201,
+    description: '회원가입 성공',
+    type: SignupResDto,
+  })
   @Post()
-  @Serialize(LoginResDto)
+  @Serialize(SignupResDto)
   async signup(
     @Body() signupDto: SignupReqDto,
     @Res({ passthrough: true }) response: Response,

@@ -17,14 +17,14 @@ export class LoginResDto {
   @ApiProperty({
     example: {
       nickname: '건우',
-      avatarUrl: '클라우드 프론트 주소/avatars/default',
+      avatarUrl: 'avatars/default',
     },
     description: '프로필 정보',
   })
   @Transform(({ obj }) => {
     return {
-      nickname: obj.profile.nickname,
-      avatarUrl: `https://d2pkj6jz1ow9ba.cloudfront.net/${obj.profile.avatarUrl}`,
+      nickname: obj.profile.nickname || '',
+      avatarUrl: obj.profile.avatarUrl,
     };
   })
   @Expose()
