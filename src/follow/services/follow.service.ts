@@ -1,11 +1,11 @@
-import { FollowOutboundPort } from '../outbound-port/follow.outbound-port';
 import {
   FollowInboundPort,
   FollowInboundPortInputDto,
 } from '../inbound-port/follow.inbount-port';
 import { Injectable, Inject, BadRequestException } from '@nestjs/common';
-import { FollowRepository } from '../outbound-adapter/follow.repository';
 import { CheckUserExistOutboundPort } from '../outbound-port/check-user-exist.outbound-port';
+import { FollowOutboundPort } from '../outbound-port/follow.outbound-port';
+import { FollowRepository } from '../outbound-adapter/follow.repository';
 import { CheckUserExistRepository } from '../outbound-adapter/check-user-exist.repository';
 
 @Injectable()
@@ -24,6 +24,7 @@ export class FollowService implements FollowInboundPort {
     if (!hasUserExist) {
       throw new BadRequestException('존재하지 않는 유저');
     }
-    return this.followRepository.execute(params);
+    await this.followRepository.execute(params);
+    return;
   }
 }
