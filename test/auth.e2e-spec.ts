@@ -3,12 +3,12 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 
-describe('Authentication E2E 테스트', () => {
-  let app: INestApplication;
-  let email = 'test1236@gmail.com';
-  let password = 'test1234!';
-  let cookie: string[];
+let app: INestApplication;
+let email = 'testa123@gmail.com';
+let password = 'test1234!';
+let cookie: string[];
 
+describe('Authentication E2E 테스트', () => {
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
@@ -16,6 +16,69 @@ describe('Authentication E2E 테스트', () => {
 
     app = moduleFixture.createNestApplication();
     await app.init();
+  });
+
+  test('이메일 형식이 아닐 경우 400 에러를 반환한다.', async () => {
+    return request(app.getHttpServer())
+      .post('/auth')
+      .send({ email: 'notemail@gmailcom', password })
+      .expect(400);
+  });
+
+  test('이메일이 10자 미만일 경우 400 에러를 반환한다.', async () => {
+    return request(app.getHttpServer())
+      .post('/auth')
+      .send({ email: email.slice(0, 10), password })
+      .expect(400);
+  });
+
+  test('이메일이 40자를 초과할 경우 400 에러를 반환한다.', async () => {
+    return request(app.getHttpServer())
+      .post('/auth')
+      .send({ email: `${'a'.repeat(31)}@naver.com`, password })
+      .expect(400);
+  });
+
+  test('비밀번호에 소문자가 없을 경우 400 에러를 반환한다.', async () => {
+    return request(app.getHttpServer())
+      .post('/auth')
+      .send({ email, password: 'TEST1234!' })
+      .expect(400);
+  });
+
+  test('비밀번호에 소문자가 없을 경우 400 에러를 반환한다.', async () => {
+    return request(app.getHttpServer())
+      .post('/auth')
+      .send({ email, password: 'TEST1234!' })
+      .expect(400);
+  });
+
+  test('비밀번호에 숫자가 없을 경우 400 에러를 반환한다.', async () => {
+    return request(app.getHttpServer())
+      .post('/auth')
+      .send({ email, password: 'TESTtest!' })
+      .expect(400);
+  });
+
+  test('비밀번호에 특수문자가 없을 경우 400 에러를 반환한다.', async () => {
+    return request(app.getHttpServer())
+      .post('/auth')
+      .send({ email, password: 'TESTtest' })
+      .expect(400);
+  });
+
+  test('비밀번호가 8자 미만일 경우 400 에러를 반환한다.', async () => {
+    return request(app.getHttpServer())
+      .post('/auth')
+      .send({ email, password: 'Abcd12!' })
+      .expect(400);
+  });
+
+  test('비밀번호가 16자를 초과할 경우 400 에러를 반환한다.', async () => {
+    return request(app.getHttpServer())
+      .post('/auth')
+      .send({ email, password: 'Abcdefgh12341234!' })
+      .expect(400);
   });
 
   test('정상적인 회원가입 요청 시 201 상태코드를 반환한다.', async () => {
@@ -27,8 +90,8 @@ describe('Authentication E2E 테스트', () => {
         const { userId, profile } = res.body;
         expect(userId).toBeGreaterThanOrEqual(1);
         expect(profile).toEqual({
-          nickname: '익명의 사용자',
-          avatarUrl: 'https://d2pkj6jz1ow9ba.cloudfront.net/avatars/default',
+          nickname: '',
+          avatarUrl: 'avatars/default',
         });
       });
   });
@@ -37,7 +100,7 @@ describe('Authentication E2E 테스트', () => {
     return request(app.getHttpServer())
       .post('/auth')
       .send({ email, password })
-      .expect(400);
+      .expect(409);
   });
 
   test('유효한 인증 정보로 로그인 할 시 200 상태코드를 반환한다.', async () => {
@@ -57,8 +120,8 @@ describe('Authentication E2E 테스트', () => {
 
     expect(body.userId).toBeGreaterThan(0);
     expect(body.profile).toStrictEqual({
-      nickname: '익명의 사용자',
-      avatarUrl: 'https://d2pkj6jz1ow9ba.cloudfront.net/avatars/default',
+      nickname: '',
+      avatarUrl: 'avatars/default',
     });
   });
 
@@ -69,5 +132,9 @@ describe('Authentication E2E 테스트', () => {
 
     cookie = res.get('Set-Cookie');
     expect(cookie[0].split('; ').at(1)).toEqual('Max-Age=0');
+  });
+
+  afterAll(async () => {
+    await app.close();
   });
 });
