@@ -1,18 +1,18 @@
-import { Profile } from './../entities/profile.entity';
+import { Profile } from '../entities/profile.entity';
 import { PassportModule } from '@nestjs/passport';
-import { ProfileRepository } from './profile.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
-import { ProfileUpdateController } from './controllers/profile-update.controller';
-import { ProfileUpdateService } from './services/profile-update.service';
+import { UpdateProfileController } from './controllers/update-profile.controller';
+import { UpdateProfileService } from './services/update-profile.service';
+import { UpdateProfileRepository } from './outbound-adapter/update-profile.repository';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Profile]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
   ],
-  controllers: [ProfileUpdateController],
-  providers: [ProfileUpdateService, ProfileRepository],
+  controllers: [UpdateProfileController],
+  providers: [UpdateProfileService, UpdateProfileRepository],
   exports: [TypeOrmModule],
 })
 export class ProfileModule {}

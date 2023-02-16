@@ -5,9 +5,12 @@ export class Profile {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ default: '익명의 사용자' })
+  @Column({ type: 'text', nullable: true })
+  bio: string;
+
+  @Column({ type: 'varchar', nullable: true })
   nickname: string;
 
-  @Column({ default: 'avatars/default' })
+  @Column({ type: 'varchar', default: 'avatars/default' })
   avatarUrl: string;
 }
