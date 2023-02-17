@@ -17,7 +17,10 @@ export class FollowService implements FollowInboundPort {
   ) {}
 
   async execute(params: FollowInboundPortInputDto): Promise<void> {
-    const { followingId } = params;
+    const { followerId, followingId } = params;
+    if (followerId === followingId) {
+      throw new BadRequestException('Bad Request');
+    }
     const hasUserExist = await this.checkUserExistByIdOutboundPort.execute(
       followingId,
     );
