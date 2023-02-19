@@ -15,7 +15,7 @@ import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { UpdateProfileInboundPort } from '../inbound-port/update-profile.inbound-port';
 import { checkEmptyBody } from '../../common/utils/checkEmptyBody';
 
-@Controller('users')
+@Controller('api/profiles')
 export class UpdateProfileController {
   constructor(
     @Inject(UpdateProfileService)
@@ -24,7 +24,7 @@ export class UpdateProfileController {
 
   @ApiOperation({ summary: '프로필 업데이트' })
   @ApiResponse({ status: 204, description: '프로필 업데이트 성공' })
-  @Patch('profile')
+  @Patch()
   @UseGuards(AuthGuard())
   @HttpCode(204)
   updateProfile(

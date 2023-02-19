@@ -6,7 +6,7 @@ import { Serialize } from '../../common/interceptors/serialize.interceptor';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { AuthGuard } from '@nestjs/passport';
 
-@Controller('auth')
+@Controller('api/auth')
 export class AuthVerifyController {
   @ApiOperation({ summary: '로그인 검증' })
   @ApiResponse({

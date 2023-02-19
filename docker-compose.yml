@@ -18,9 +18,15 @@ services:
       - .env.production
     ports:
       - 8000:8000
-    volumes:
-      - ./:/server
     command: ['npm', 'start']
+
+  dev-server:
+    image: farenheim7/planit-dev-server
+    container_name: planit-dev-server
+    restart: always
+    ports:
+      - 8000:8000
+    command: ['npm', 'run', 'start:dev']
 
   npm:
     image: node:18.14

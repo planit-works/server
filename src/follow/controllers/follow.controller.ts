@@ -13,7 +13,7 @@ import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { User } from '../../entities/user.entity';
 import { AuthGuard } from '@nestjs/passport';
 
-@Controller('follow')
+@Controller('api/follow')
 export class FollowController {
   constructor(
     @Inject(FollowService) private followInboundPort: FollowInboundPort,

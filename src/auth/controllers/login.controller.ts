@@ -1,6 +1,6 @@
-import { User } from './../../entities/user.entity';
-import { LoginInboundPort } from './../inbound-port/login.inbound-port';
-import { TokenPayload } from './../types/token-payload';
+import { User } from '../../entities/user.entity';
+import { LoginInboundPort } from '../inbound-port/login.inbound-port';
+import { TokenPayload } from '../types/token-payload';
 import { Controller, Post, Body, HttpCode, Res, Inject } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
@@ -9,7 +9,7 @@ import { LoginService } from '../services/login.service';
 import { LoginReqDto, LoginResDto } from '../dtos';
 import { Serialize } from '../../common/interceptors/serialize.interceptor';
 
-@Controller('auth')
+@Controller('api/auth')
 export class LoginController {
   constructor(
     @Inject(LoginService)

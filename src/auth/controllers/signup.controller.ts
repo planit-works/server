@@ -8,7 +8,7 @@ import { Serialize } from '../../common/interceptors/serialize.interceptor';
 import { Response } from 'express';
 import { SignupInboundPort } from '../inbound-port/signup.inbound-port';
 
-@Controller('auth')
+@Controller('api/auth')
 export class SignupController {
   constructor(
     @Inject(SignupService)
