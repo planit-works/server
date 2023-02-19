@@ -6,7 +6,6 @@ COPY package.json .
 
 RUN npm install
 
-# COPY를 사용하는 이유는 프로덕션용 스냅샷 이미지를 생성하기 위함!
 COPY . .
 
 ARG DEFAULT_PORT=8000

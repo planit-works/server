@@ -5,10 +5,6 @@ Dockerfile
 node_modules
 dist
 
-# Environment
-.env.development
-.env.test
-
 # Git
 .git
 
