@@ -29,12 +29,16 @@ export class SignupController {
     @Res({ passthrough: true }) response: Response,
   ): Promise<User> {
     const user = await this.singupInboundPort.execute(signupDto);
-    const payload = { userId: user.id };
+    const payload = { sub: user.id };
     const accessToken = this.jwtService.sign(payload, {
       secret: process.env.JWT_SECRET,
       expiresIn: process.env.JWT_EXPIRES_IN,
     });
-    response.cookie('Authorization', accessToken, { httpOnly: true });
+    response.cookie('Authorization', accessToken, {
+      httpOnly: true,
+      sameSite: 'none',
+      // secure: true,
+    });
     return user;
   }
 }

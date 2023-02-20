@@ -61,6 +61,12 @@ describe('UnfollowService Unit Testing', () => {
     ).rejects.toThrow(BadRequestException);
   });
 
+  test('존재하지 않는 유저를 언팔로우할 경우 400 에러를 반환한다.', async () => {
+    await expect(
+      unfollowService.execute({ unfollowerId: 1, unfollowingId: 6 }),
+    ).rejects.toThrow(BadRequestException);
+  });
+
   test('팔로우 중인 유저가 아닐 경우 400 에러를 반환한다.', async () => {
     await expect(
       unfollowService.execute({ unfollowerId: 1, unfollowingId: 4 }),

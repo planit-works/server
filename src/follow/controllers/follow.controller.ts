@@ -12,6 +12,7 @@ import { FollowReqDto } from '../dtos/follow.req.dto';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { User } from '../../entities/user.entity';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 @Controller('api/follow')
 export class FollowController {
@@ -19,6 +20,8 @@ export class FollowController {
     @Inject(FollowService) private followInboundPort: FollowInboundPort,
   ) {}
 
+  @ApiOperation({ summary: '팔로우' })
+  @ApiResponse({ status: 204, description: '팔로우 성공' })
   @Post()
   @UseGuards(AuthGuard())
   @HttpCode(204)

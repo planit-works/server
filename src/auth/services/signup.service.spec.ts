@@ -34,6 +34,7 @@ class MockCreateUserOutboundPort implements CreateUserOutboundPort {
         id: 2,
         nickname: '익명의 사용자',
         avatarUrl: 'avatars/default',
+        bio: '',
       },
     });
   }

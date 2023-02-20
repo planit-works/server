@@ -12,7 +12,7 @@ import { CheckUserExistRepository } from '../outbound-adapter/check-user-exist.r
 export class FollowService implements FollowInboundPort {
   constructor(
     @Inject(CheckUserExistRepository)
-    private checkUserExistByIdOutboundPort: CheckUserExistOutboundPort,
+    private checkUserExistOutboundPort: CheckUserExistOutboundPort,
     @Inject(FollowRepository) private followRepository: FollowOutboundPort,
   ) {}
 
@@ -21,7 +21,7 @@ export class FollowService implements FollowInboundPort {
     if (followerId === followingId) {
       throw new BadRequestException('Bad Request');
     }
-    const hasUserExist = await this.checkUserExistByIdOutboundPort.execute(
+    const hasUserExist = await this.checkUserExistOutboundPort.execute(
       followingId,
     );
     if (!hasUserExist) {

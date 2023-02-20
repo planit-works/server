@@ -1,8 +1,8 @@
-import { User } from './../entities/user.entity';
-import { Profile } from './../entities/profile.entity';
+import { User } from '../entities/user.entity';
+import { Profile } from '../entities/profile.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
-import { UserRepository } from './../user/user.repository';
+import { UserRepository } from '../user/user.repository';
 import { Module } from '@nestjs/common';
 import {
   SignupController,

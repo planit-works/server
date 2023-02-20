@@ -16,7 +16,7 @@ describe('AppController (e2e)', () => {
   });
 
   test('헬스체크에 대해 204 상태코드를 반환한다.', () => {
-    return request(app.getHttpServer()).get('/healthcheck').expect(204);
+    return request(app.getHttpServer()).get('/api/healthcheck').expect(204);
   });
 
   afterAll(async () => {

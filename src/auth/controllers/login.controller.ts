@@ -31,7 +31,11 @@ export class LoginController {
     const accessToken = this.jwtService.sign(payload, {
       secret: process.env.JWT_SECRET,
     });
-    response.cookie('Authorization', accessToken, { httpOnly: true });
+    response.cookie('Authorization', accessToken, {
+      httpOnly: true,
+      sameSite: 'none',
+      // secure: true,
+    });
     return user;
   }
 }
