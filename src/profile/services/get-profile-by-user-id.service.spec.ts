@@ -18,7 +18,6 @@ class MockGetProfileByIdOutboundPort implements GetProfileByUserIdOutboundPort {
     userId: number,
   ): Promise<GetProfileByUserIdOutboundPortOutputDto> {
     const user = this.users.find((user) => user.id === userId);
-    console.log(user);
     if (!user) {
       throw new BadRequestException('Bad Request');
     }

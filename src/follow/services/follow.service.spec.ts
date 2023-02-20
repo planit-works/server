@@ -6,7 +6,9 @@ import { Follow } from '../../entities/follow.entity';
 import { FollowService } from './follow.service';
 import { BadRequestException } from '@nestjs/common';
 
-class MockCheckUserExistOutboundPort implements CheckUserExistOutboundPort {
+export class MockCheckUserExistOutboundPort
+  implements CheckUserExistOutboundPort
+{
   private readonly users: Partial<User>[];
 
   constructor(users: Partial<User>[]) {
@@ -44,7 +46,7 @@ let users: Partial<User>[];
 let follows: Partial<Follow>[];
 
 describe('FollowService 유닛 테스트', () => {
-  beforeEach(async () => {
+  beforeEach(() => {
     users = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }];
 
     follows = [
@@ -63,6 +65,15 @@ describe('FollowService 유닛 테스트', () => {
 
   test('FollowService를 인스턴스로 생성할 수 있다.', async () => {
     expect(followService).toBeDefined();
+  });
+
+  test('자기 자신을 팔로우할 경우 400에러를 반환한다.', async () => {
+    await expect(
+      followService.execute({
+        followerId: 1,
+        followingId: 1,
+      }),
+    ).rejects.toThrow(BadRequestException);
   });
 
   test('존재하지 않는 유저를 팔로우하면 400 에러를 반환한다.', async () => {

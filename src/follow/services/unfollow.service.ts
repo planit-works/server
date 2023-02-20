@@ -17,7 +17,10 @@ export class UnfollowService implements UnfollowInboundPort {
     private unfollowOutboundPort: UnfollowOutboundPort,
   ) {}
   async execute(params: UnfollowInboundPortInputDto): Promise<void> {
-    const { unfollowingId } = params;
+    const { unfollowerId, unfollowingId } = params;
+    if (unfollowerId === unfollowingId) {
+      throw new BadRequestException('Bad Request');
+    }
     const hasUserExist = await this.checkUserExistOutboundPort.execute(
       unfollowingId,
     );
