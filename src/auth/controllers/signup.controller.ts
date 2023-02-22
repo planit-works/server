@@ -37,7 +37,7 @@ export class SignupController {
     response.cookie('Authorization', accessToken, {
       httpOnly: true,
       sameSite: 'none',
-      // secure: true,
+      secure: process.env.NODE_ENV === 'production',
     });
     return user;
   }

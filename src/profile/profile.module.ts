@@ -11,10 +11,6 @@ import { User } from '../entities/user.entity';
 import { Follow } from '../entities/follow.entity';
 import { GetProfileByUserIdRepository } from './outbound-adapter/get-profile-by-user-id.repository';
 import { GetFollowCountRepository } from './outbound-adapter/get-follow-count.repository';
-import { JwtStrategy } from '../auth/jwt.strategy';
-import { UserRepository } from '../user/user.repository';
-import { JwtModule, JwtService } from '@nestjs/jwt';
-import { ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
