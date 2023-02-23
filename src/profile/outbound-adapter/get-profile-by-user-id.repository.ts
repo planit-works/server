@@ -18,7 +18,7 @@ export class GetProfileByUserIdRepository
   async execute(
     userId: number,
   ): Promise<GetProfileByUserIdOutboundPortOutputDto> {
-    return await this.userRepository.findOne({
+    return (await this.userRepository.findOne({
       where: { id: userId },
       select: {
         id: true,
@@ -28,6 +28,6 @@ export class GetProfileByUserIdRepository
       relations: {
         profile: true,
       },
-    });
+    })) as unknown as GetProfileByUserIdOutboundPortOutputDto;
   }
 }

@@ -24,10 +24,6 @@ export class User {
   @Column()
   password: string;
 
-  @OneToOne(() => Profile)
-  @JoinColumn()
-  profile: Profile;
-
   @Column()
   profileId: number;
 
@@ -36,6 +32,10 @@ export class User {
 
   @DeleteDateColumn()
   deletedAt?: Date;
+
+  @OneToOne(() => Profile, (profile) => profile.user)
+  @JoinColumn()
+  profile: Profile;
 
   @OneToMany(() => Follow, (follow) => follow.following)
   following?: Follow[];

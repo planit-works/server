@@ -1,6 +1,7 @@
 export interface GetProfileByUserIdOutboundPortOutputDto {
   id: number;
   email: string;
+  // userId: number;
   profile: {
     nickname: string;
     avatarUrl: string;

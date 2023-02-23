@@ -27,7 +27,7 @@ export class SearchUsersByNicknameService
     const profiles = await this.searchUsersByNicknameOutboundPort.execute(
       nickname,
     );
-    const followingIds = profiles.map((profile) => profile.userId);
+    const followingIds = profiles.map((profile) => profile.user.id);
     const follows = await this.checkFollowingOutboundPort.execute({
       followerId: userId,
       followingIds,
@@ -35,11 +35,11 @@ export class SearchUsersByNicknameService
     const followingUsers = follows.map((follow) => follow.followingId);
     return profiles.map((profile) => ({
       id: profile.id,
-      userId: profile.userId,
+      userId: profile.user.id,
       nickname: profile.nickname,
       avatarUrl: profile.avatarUrl,
       bio: profile.bio,
-      isFollowing: followingUsers.includes(profile.userId),
+      isFollowing: followingUsers.includes(profile.user.id),
     }));
   }
 }

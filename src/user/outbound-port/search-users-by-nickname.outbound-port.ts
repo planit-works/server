@@ -1,6 +1,8 @@
 export interface SearchUsersByNicknameOutboundPortOutputDto {
   id: number;
-  userId: number;
+  user: {
+    id: number;
+  };
   nickname: string;
   bio: string;
   avatarUrl: string;

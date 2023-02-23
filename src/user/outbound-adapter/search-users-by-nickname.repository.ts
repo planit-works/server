@@ -19,12 +19,13 @@ export class SearchUsersByNicknameRepository
   ): Promise<SearchUsersByNicknameOutboundPortOutputDto[]> {
     return (await this.profileRepository.find({
       where: { nickname: Like(`${nickname}%`) },
+      relations: { user: true },
       select: {
         id: true,
-        userId: true,
         nickname: true,
         avatarUrl: true,
         bio: true,
+        user: { id: true },
       },
     })) as unknown as SearchUsersByNicknameOutboundPortOutputDto[];
   }

@@ -4,7 +4,6 @@ import {
   Column,
   Index,
   OneToOne,
-  JoinColumn,
 } from 'typeorm';
 import { User } from './user.entity';
 
@@ -12,9 +11,6 @@ import { User } from './user.entity';
 export class Profile {
   @PrimaryGeneratedColumn()
   id: number;
-
-  @Column()
-  userId: number;
 
   @Column({ type: 'text', nullable: true })
   bio: string;
@@ -26,7 +22,6 @@ export class Profile {
   @Column({ type: 'varchar', default: 'avatars/default' })
   avatarUrl: string;
 
-  @OneToOne(() => User)
-  @JoinColumn()
+  @OneToOne(() => User, (user) => user.profile)
   user?: User;
 }

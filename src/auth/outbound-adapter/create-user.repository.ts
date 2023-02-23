@@ -8,6 +8,7 @@ import {
   CreateUserOutboundPortInputDto,
 } from '../outbound-port/create-user.outbound-port';
 import { Connection } from 'typeorm';
+import { query } from 'express';
 
 @Injectable()
 export class CreateUserRepository implements CreateUserOutboundPort {
@@ -26,7 +27,7 @@ export class CreateUserRepository implements CreateUserOutboundPort {
     let profile = this.profileRepository.create({ nickname });
     try {
       profile = await queryRunner.manager.save(profile);
-      user.profileId = profile.id;
+      user.profile = profile;
       user = await queryRunner.manager.save(user);
       await queryRunner.commitTransaction();
     } catch (err) {

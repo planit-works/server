@@ -27,7 +27,12 @@ export class LoginController {
     @Res({ passthrough: true }) response: Response,
   ): Promise<User> {
     const user = await this.loginInboundPort.execute(loginDto);
-    const payload: TokenPayload = { sub: user.id };
+    const payload: TokenPayload = {
+      sub: user.id,
+      profileId: user.profileId,
+      nickname: user.profile.nickname,
+      avatarUrl: user.profile.avatarUrl,
+    };
     const accessToken = this.jwtService.sign(payload, {
       secret: process.env.JWT_SECRET,
     });

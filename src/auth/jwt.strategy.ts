@@ -29,14 +29,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(
-    payload: TokenPayload,
-  ): Promise<GetUserByIdOutboundPortOutputDto> {
+  async validate(payload: TokenPayload): Promise<TokenPayload> {
     const { sub: userId } = payload;
     const user = await this.getUserByIdRepository.execute(userId);
     if (!user) {
       throw new UnauthorizedException('인증이 필요한 유저');
     }
-    return user;
+    return payload;
   }
 }

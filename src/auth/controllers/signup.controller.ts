@@ -7,6 +7,7 @@ import { SignupReqDto, SignupResDto } from '../dtos';
 import { Serialize } from '../../common/interceptors/serialize.interceptor';
 import { Response } from 'express';
 import { SignupInboundPort } from '../inbound-port/signup.inbound-port';
+import { TokenPayload } from '../types/token-payload';
 
 @Controller('api/auth')
 export class SignupController {
@@ -29,7 +30,12 @@ export class SignupController {
     @Res({ passthrough: true }) response: Response,
   ): Promise<User> {
     const user = await this.singupInboundPort.execute(signupDto);
-    const payload = { sub: user.id };
+    const payload: TokenPayload = {
+      sub: user.id,
+      profileId: user.profileId,
+      nickname: user.profile.nickname,
+      avatarUrl: user.profile.avatarUrl,
+    };
     const accessToken = this.jwtService.sign(payload, {
       secret: process.env.JWT_SECRET,
       expiresIn: process.env.JWT_EXPIRES_IN,
