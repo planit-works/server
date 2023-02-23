@@ -9,6 +9,7 @@ import {
   OneToMany,
   CreateDateColumn,
   DeleteDateColumn,
+  Index,
 } from 'typeorm';
 
 @Entity()
@@ -16,9 +17,8 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({
-    unique: true,
-  })
+  @Index()
+  @Column()
   email: string;
 
   @Column()

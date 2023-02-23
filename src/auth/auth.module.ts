@@ -17,6 +17,7 @@ import { CheckEmailDuplicateRepository } from './outbound-adapter/check-email-du
 import { GetUserByEmailRepository } from './outbound-adapter/get-user-by-email.repository';
 import { CreateUserRepository } from './outbound-adapter/create-user.repository';
 import { GetUserByIdRepository } from './outbound-adapter/get-user-by-id.repository';
+import { CheckNicknameDuplicateRepository } from '../profile/outbound-adapter/check-nickname-duplicate.repository';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { GetUserByIdRepository } from './outbound-adapter/get-user-by-id.reposit
     CreateUserRepository,
     JwtStrategy,
     JwtService,
+    CheckNicknameDuplicateRepository,
   ],
   exports: [],
 })

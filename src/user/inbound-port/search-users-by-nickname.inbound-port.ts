@@ -12,7 +12,7 @@ export interface SearchUsersByNicknameInboundPortOutputDto {
   bio: string;
 }
 
-export interface SearchUsersByEmailInboundPort {
+export interface SearchUsersByNicknameInboundPort {
   execute(
     params: SearchUsersByNicknameInboundPortInputDto,
   ): Promise<SearchUsersByNicknameInboundPortOutputDto[]>;

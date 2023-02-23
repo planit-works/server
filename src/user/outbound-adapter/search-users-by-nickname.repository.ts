@@ -1,27 +1,31 @@
 import { Injectable } from '@nestjs/common';
-import { SearchUsersByEmailOutboundPort } from '../outbound-port/search-users-by-email.outbound-port';
+import {
+  SearchUsersByNicknameOutboundPort,
+  SearchUsersByNicknameOutboundPortOutputDto,
+} from '../outbound-port/search-users-by-nickname.outbound-port';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from '../../entities/user.entity';
 import { Like, Repository } from 'typeorm';
-import { SearchUsersByEmailInboundPortOutputDto } from '../inbound-port/search-users-by-email.inbound-port';
+import { Profile } from '../../entities/profile.entity';
 
 @Injectable()
-export class SearchUsersByEmailRepository
-  implements SearchUsersByEmailOutboundPort
+export class SearchUsersByNicknameRepository
+  implements SearchUsersByNicknameOutboundPort
 {
   constructor(
-    @InjectRepository(User) private userRepository: Repository<User>,
+    @InjectRepository(Profile) private profileRepository: Repository<Profile>,
   ) {}
   async execute(
-    email: string,
-  ): Promise<SearchUsersByEmailInboundPortOutputDto[]> {
-    return (await this.userRepository.find({
-      where: { email: Like(`${email}%`) },
-      relations: { profile: true },
+    nickname: string,
+  ): Promise<SearchUsersByNicknameOutboundPortOutputDto[]> {
+    return (await this.profileRepository.find({
+      where: { nickname: Like(`${nickname}%`) },
       select: {
         id: true,
-        profile: { nickname: true, avatarUrl: true },
+        userId: true,
+        nickname: true,
+        avatarUrl: true,
+        bio: true,
       },
-    })) as unknown as SearchUsersByEmailInboundPortOutputDto[];
+    })) as unknown as SearchUsersByNicknameOutboundPortOutputDto[];
   }
 }

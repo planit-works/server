@@ -1,24 +1,25 @@
 import { User } from '../entities/user.entity';
 import { PassportModule } from '@nestjs/passport';
-// import { GetUserInterceptor } from './interceptors/get-user.interceptor';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
-// import { APP_INTERCEPTOR } from '@nestjs/core'; // 전역적으로 적용할 경우 성능을 저하 및 overfetching을 유발한다.
-import { SearchUsersByEmailController } from './controllers/search-users-by-email.controller';
-import { SearchUsersByEmailService } from './services/search-users-by-email.service';
-import { SearchUsersByEmailRepository } from './outbound-adapter/search-users-by-email.repository';
+import { SearchUsersByNicknameController } from './controllers/search-users-by-nickname.controller';
+import { SearchUsersByNicknameService } from './services/search-users-by-nickname.service';
+import { SearchUsersByNicknameRepository } from './outbound-adapter/search-users-by-nickname.repository';
 import { CheckFollowingRepository } from './outbound-adapter/check-following.repository';
 import { Follow } from '../entities/follow.entity';
+import { Profile } from '../entities/profile.entity';
+// import { APP_INTERCEPTOR } from '@nestjs/core'; // 전역적으로 적용할 경우 성능을 저하 및 overfetching을 유발한다.
+// import { GetUserInterceptor } from './interceptors/get-user.interceptor';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Follow]),
+    TypeOrmModule.forFeature([User, Follow, Profile]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
   ],
-  controllers: [SearchUsersByEmailController],
+  controllers: [SearchUsersByNicknameController],
   providers: [
-    SearchUsersByEmailService,
-    SearchUsersByEmailRepository,
+    SearchUsersByNicknameService,
+    SearchUsersByNicknameRepository,
     CheckFollowingRepository,
   ],
 })

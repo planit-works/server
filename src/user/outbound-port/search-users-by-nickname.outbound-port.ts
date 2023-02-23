@@ -1,11 +1,9 @@
-interface Profile {
-  nickname: string;
-  avatarUrl: string;
-}
-
 export interface SearchUsersByNicknameOutboundPortOutputDto {
   id: number;
-  profile: Profile;
+  userId: number;
+  nickname: string;
+  bio: string;
+  avatarUrl: string;
 }
 
 export interface SearchUsersByNicknameOutboundPort {
