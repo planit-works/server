@@ -6,22 +6,22 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { SearchUsersByEmailService } from '../services/search-users-by-email.service';
+import { SearchUsersByNicknameService } from '../services/search-users-by-nickname.service';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { User } from '../../entities/user.entity';
 import {
-  SearchUsersByEmailInboundPort,
+  SearchUsersByNicknameInboundPort,
   SearchUsersByEmailInboundPortOutputDto,
-} from '../inbound-port/search-users-by-email.inbound-port';
+} from '../inbound-port/search-users-by-nickname.inbound-port';
 import { SearchUsersByEmailReqQueryDto } from '../dtos/search-users-by-email.req.query.dto';
 
 @Controller('api/users')
 export class SearchUsersByEmailController {
   constructor(
-    @Inject(SearchUsersByEmailService)
-    private searchUsersByEmailInboundPort: SearchUsersByEmailInboundPort,
+    @Inject(SearchUsersByNicknameService)
+    private searchUsersByEmailInboundPort: SearchUsersByNicknameInboundPort,
   ) {}
 
   @ApiOperation({

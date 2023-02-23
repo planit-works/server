@@ -18,11 +18,12 @@ export class CreateUserRepository implements CreateUserOutboundPort {
   ) {}
 
   async execute(params: CreateUserOutboundPortInputDto): Promise<User> {
+    const { randomNickname: nickname } = params;
     const queryRunner = this.connection.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
     let user = this.userRepository.create(params);
-    let profile = this.profileRepository.create();
+    let profile = this.profileRepository.create({ nickname });
     try {
       profile = await queryRunner.manager.save(profile);
       user.profileId = profile.id;

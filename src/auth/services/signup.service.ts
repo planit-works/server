@@ -9,12 +9,17 @@ import {
   SignupInboundPortInputDto,
   SignupInboundPortOutputDto,
 } from '../inbound-port/signup.inbound-port';
+import { createRandomNickname } from '../utils/create-random-nickname';
+import { CheckNicknameDuplicateOutboundPort } from '../../profile/outbound-port/check-nickname-duplicate.outbound-port';
+import { CheckNicknameDuplicateRepository } from '../../profile/outbound-adapter/check-nickname-duplicate.repository';
 
 @Injectable()
 export class SignupService implements SignupInboundPort {
   constructor(
     @Inject(CheckEmailDuplicateRepository)
     private checkEmailDuplicateOutboundPort: CheckEmailDuplicateOutboundPort,
+    @Inject(CheckNicknameDuplicateRepository)
+    private checkNicknameDuplicateOutboundPort: CheckNicknameDuplicateOutboundPort,
     @Inject(CreateUserRepository)
     private createUserOutboundPort: CreateUserOutboundPort,
   ) {}
@@ -30,9 +35,18 @@ export class SignupService implements SignupInboundPort {
       throw new ConflictException('가입된 이메일');
     }
     const hashedPassword = await bcrypt.hash(password, 12);
+    let randomNickname = createRandomNickname();
+    let isNicknameDuplicate =
+      await this.checkNicknameDuplicateOutboundPort.execute(randomNickname);
+    while (isNicknameDuplicate) {
+      randomNickname = createRandomNickname();
+      isNicknameDuplicate =
+        await this.checkNicknameDuplicateOutboundPort.execute(randomNickname);
+    }
     const user = await this.createUserOutboundPort.execute({
       email,
       password: hashedPassword,
+      randomNickname,
     });
 
     return user;

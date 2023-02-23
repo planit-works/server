@@ -1,8 +1,8 @@
-import { User } from './../../entities/user.entity';
+import { User } from '../../entities/user.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CheckEmailDuplicateOutboundPort } from './../outbound-port/check-email-duplicate.outbound-port';
+import { CheckEmailDuplicateOutboundPort } from '../outbound-port/check-email-duplicate.outbound-port';
 
 @Injectable()
 export class CheckEmailDuplicateRepository
@@ -13,7 +13,6 @@ export class CheckEmailDuplicateRepository
   ) {}
 
   async execute(email: string): Promise<boolean> {
-    const user = await this.userRepository.findOne({ where: { email } });
-    return user !== null;
+    return await this.userRepository.exist({ where: { email } });
   }
 }

@@ -11,6 +11,7 @@ import { User } from '../entities/user.entity';
 import { Follow } from '../entities/follow.entity';
 import { GetProfileByUserIdRepository } from './outbound-adapter/get-profile-by-user-id.repository';
 import { GetFollowCountRepository } from './outbound-adapter/get-follow-count.repository';
+import { CheckNicknameDuplicateRepository } from './outbound-adapter/check-nickname-duplicate.repository';
 
 @Module({
   imports: [
@@ -24,6 +25,8 @@ import { GetFollowCountRepository } from './outbound-adapter/get-follow-count.re
     GetProfileByUserIdService,
     GetProfileByUserIdRepository,
     GetFollowCountRepository,
+    CheckNicknameDuplicateRepository,
   ],
+  exports: [CheckNicknameDuplicateRepository],
 })
 export class ProfileModule {}
