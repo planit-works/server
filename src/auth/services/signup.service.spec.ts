@@ -7,6 +7,7 @@ import {
   CreateUserOutboundPortInputDto,
 } from '../outbound-port/create-user.outbound-port';
 import { CheckEmailDuplicateOutboundPort } from '../outbound-port/check-email-duplicate.outbound-port';
+import { CheckNicknameDuplicateOutboundPort } from '../../profile/outbound-port/check-nickname-duplicate.outbound-port';
 
 class MockCheckEmailDuplicateOutboundPort
   implements CheckEmailDuplicateOutboundPort
@@ -23,6 +24,14 @@ class MockCheckEmailDuplicateOutboundPort
   }
 }
 
+class MockCheckNicknameDuplicateOutboudPort
+  implements CheckNicknameDuplicateOutboundPort
+{
+  async execute(nickname: string) {
+    return false;
+  }
+}
+
 class MockCreateUserOutboundPort implements CreateUserOutboundPort {
   async execute(params: CreateUserOutboundPortInputDto) {
     return Promise.resolve({
@@ -32,7 +41,8 @@ class MockCreateUserOutboundPort implements CreateUserOutboundPort {
       profileId: 2,
       profile: {
         id: 2,
-        nickname: '익명의 사용자',
+        userId: 2,
+        nickname: 'mercury123456',
         avatarUrl: 'avatars/default',
         bio: '',
       },
@@ -60,6 +70,7 @@ describe('SignupService 유닛 테스트', () => {
 
     signupService = new SignupService(
       new MockCheckEmailDuplicateOutboundPort(users),
+      new MockCheckNicknameDuplicateOutboudPort(),
       new MockCreateUserOutboundPort(),
     );
   });

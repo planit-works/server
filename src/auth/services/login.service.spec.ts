@@ -3,8 +3,6 @@ import {
   GetUserByEmailOutboundPortOutputDto,
 } from '../outbound-port/get-user-by-email.outbound-port';
 import { LoginService } from './login.service';
-import { UserFindByEmailService } from '../../user/services/user-find-by-email.service';
-import { Test } from '@nestjs/testing';
 import { BadRequestException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { User } from '../../entities/user.entity';
