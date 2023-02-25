@@ -1,11 +1,11 @@
 name: Planit Server CI - Unit Test
 
-on: pull_request
-  branchs: ["main"]
+on:
+  pull_request:
+    branches: [main]
 
 jobs:
   unit-test:
-  
     runs-on: ubuntu-20.04
 
     steps:
@@ -16,7 +16,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18.14.2'
-      
+
       - name: Install Dependencies
         run: npm ci
 
