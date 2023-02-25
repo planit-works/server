@@ -1,14 +1,13 @@
-import { UserFindByEmailService } from './../../user/services/user-find-by-email.service';
 import { SignupService } from './signup.service';
-import { UserCreateService } from '../../user/services/user-create.service';
 import { ConflictException } from '@nestjs/common';
-import { User } from '../../user/entities/user.entity';
-import {
-  CreateUserOutboundPortInputDto,
-  CreateUserOutboundPort,
-} from '../../../dist/auth/outbound-port/create-user.outbound-port';
+import { User } from '../../entities/user.entity';
 import * as bcrypt from 'bcrypt';
-import { CheckEmailDuplicateOutboundPort } from '../../../dist/auth/outbound-port/check-email-duplicate.outbound-port';
+import {
+  CreateUserOutboundPort,
+  CreateUserOutboundPortInputDto,
+} from '../outbound-port/create-user.outbound-port';
+import { CheckEmailDuplicateOutboundPort } from '../outbound-port/check-email-duplicate.outbound-port';
+import { CheckNicknameDuplicateOutboundPort } from '../../profile/outbound-port/check-nickname-duplicate.outbound-port';
 
 class MockCheckEmailDuplicateOutboundPort
   implements CheckEmailDuplicateOutboundPort
@@ -25,6 +24,14 @@ class MockCheckEmailDuplicateOutboundPort
   }
 }
 
+class MockCheckNicknameDuplicateOutboudPort
+  implements CheckNicknameDuplicateOutboundPort
+{
+  async execute(nickname: string) {
+    return false;
+  }
+}
+
 class MockCreateUserOutboundPort implements CreateUserOutboundPort {
   async execute(params: CreateUserOutboundPortInputDto) {
     return Promise.resolve({
@@ -34,8 +41,10 @@ class MockCreateUserOutboundPort implements CreateUserOutboundPort {
       profileId: 2,
       profile: {
         id: 2,
-        nickname: '익명의 사용자',
+        userId: 2,
+        nickname: 'mercury123456',
         avatarUrl: 'avatars/default',
+        bio: '',
       },
     });
   }
@@ -61,6 +70,7 @@ describe('SignupService 유닛 테스트', () => {
 
     signupService = new SignupService(
       new MockCheckEmailDuplicateOutboundPort(users),
+      new MockCheckNicknameDuplicateOutboudPort(),
       new MockCreateUserOutboundPort(),
     );
   });

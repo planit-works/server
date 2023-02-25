@@ -1,13 +1,14 @@
+import { Profile } from '../../entities/profile.entity';
+import { User } from '../../entities/user.entity';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from './../../user/entities/user.entity';
-import { Profile } from '../../profile/entities/profile.entity';
 import { Repository } from 'typeorm';
 import {
   CreateUserOutboundPort,
   CreateUserOutboundPortInputDto,
 } from '../outbound-port/create-user.outbound-port';
 import { Connection } from 'typeorm';
+import { query } from 'express';
 
 @Injectable()
 export class CreateUserRepository implements CreateUserOutboundPort {
@@ -18,14 +19,15 @@ export class CreateUserRepository implements CreateUserOutboundPort {
   ) {}
 
   async execute(params: CreateUserOutboundPortInputDto): Promise<User> {
+    const { randomNickname: nickname } = params;
     const queryRunner = this.connection.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
     let user = this.userRepository.create(params);
-    let profile = this.profileRepository.create();
+    let profile = this.profileRepository.create({ nickname });
     try {
       profile = await queryRunner.manager.save(profile);
-      user.profileId = profile.id;
+      user.profile = profile;
       user = await queryRunner.manager.save(user);
       await queryRunner.commitTransaction();
     } catch (err) {

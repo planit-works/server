@@ -1,11 +1,11 @@
+import { User } from '../../entities/user.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from './../../user/entities/user.entity';
 import { Repository } from 'typeorm';
 import {
   GetUserByEmailOutboundPort,
   GetUserByEmailOutboundPortOutputDto,
-} from './../outbound-port/get-user-by-email.outbound-port';
+} from '../outbound-port/get-user-by-email.outbound-port';
 
 @Injectable()
 export class GetUserByEmailRepository implements GetUserByEmailOutboundPort {
@@ -14,10 +14,9 @@ export class GetUserByEmailRepository implements GetUserByEmailOutboundPort {
   ) {}
 
   async execute(email: string): Promise<GetUserByEmailOutboundPortOutputDto> {
-    const user = await this.userRepository.findOne({
+    return await this.userRepository.findOne({
       where: { email },
       relations: { profile: true },
     });
-    return user;
   }
 }

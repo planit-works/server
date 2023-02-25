@@ -2,7 +2,7 @@ import { Controller, Get, HttpCode } from '@nestjs/common';
 
 @Controller()
 export class AppController {
-  @Get('healthcheck')
+  @Get('api/healthcheck')
   @HttpCode(204)
   healthcheck() {
     return;

@@ -1,4 +1,4 @@
-import { Profile } from './../../profile/entities/profile.entity';
+import { Profile } from '../../entities/profile.entity';
 
 export interface LoginInboundPortInputDto {
   email: string;

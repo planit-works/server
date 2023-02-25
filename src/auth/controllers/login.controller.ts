@@ -1,6 +1,6 @@
-import { LoginInboundPort } from './../inbound-port/login.inbound-port';
-import { TokenPayload } from './../types/token-payload';
-import { User } from './../../user/entities/user.entity';
+import { User } from '../../entities/user.entity';
+import { LoginInboundPort } from '../inbound-port/login.inbound-port';
+import { TokenPayload } from '../types/token-payload';
 import { Controller, Post, Body, HttpCode, Res, Inject } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
@@ -9,7 +9,7 @@ import { LoginService } from '../services/login.service';
 import { LoginReqDto, LoginResDto } from '../dtos';
 import { Serialize } from '../../common/interceptors/serialize.interceptor';
 
-@Controller('auth')
+@Controller('api/auth')
 export class LoginController {
   constructor(
     @Inject(LoginService)
@@ -27,11 +27,20 @@ export class LoginController {
     @Res({ passthrough: true }) response: Response,
   ): Promise<User> {
     const user = await this.loginInboundPort.execute(loginDto);
-    const payload: TokenPayload = { sub: user.id };
+    const payload: TokenPayload = {
+      sub: user.id,
+      profileId: user.profileId,
+      nickname: user.profile.nickname,
+      avatarUrl: user.profile.avatarUrl,
+    };
     const accessToken = this.jwtService.sign(payload, {
       secret: process.env.JWT_SECRET,
     });
-    response.cookie('Authorization', accessToken, { httpOnly: true });
+    response.cookie('Authorization', accessToken, {
+      httpOnly: true,
+      sameSite: 'none',
+      secure: process.env.NODE_ENV === 'production',
+    });
     return user;
   }
 }

@@ -6,7 +6,7 @@ import { AppModule } from '../src/app.module';
 describe('AppController (e2e)', () => {
   let app: INestApplication;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();
@@ -16,6 +16,10 @@ describe('AppController (e2e)', () => {
   });
 
   test('헬스체크에 대해 204 상태코드를 반환한다.', () => {
-    return request(app.getHttpServer()).get('/healthcheck').expect(204);
+    return request(app.getHttpServer()).get('/api/healthcheck').expect(204);
+  });
+
+  afterAll(async () => {
+    await app.close();
   });
 });
