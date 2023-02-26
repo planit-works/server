@@ -2,10 +2,9 @@ import { AppModule } from '../src/app.module';
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { DataSource } from 'typeorm';
 
 describe('Authentication E2E 테스트', () => {
-  const randomNumber = Math.floor(Math.random() * 100000);
+  const randomNumber = Math.floor(Math.random() * 1000000);
   let app: INestApplication;
   let email = `test${randomNumber}@gmail.com`;
   let password = 'test1234!';
@@ -91,10 +90,8 @@ describe('Authentication E2E 테스트', () => {
       .then((res) => {
         const { userId, profile } = res.body;
         expect(userId).toBeGreaterThanOrEqual(1);
-        expect(profile).toEqual({
-          nickname: '',
-          avatarUrl: 'avatars/default',
-        });
+        expect(profile.nickname.length).toBeGreaterThan(4);
+        expect(profile.avatarUrl).toEqual('avatars/default');
       });
   });
 
@@ -121,10 +118,7 @@ describe('Authentication E2E 테스트', () => {
       .expect(200);
 
     expect(body.userId).toBeGreaterThan(0);
-    expect(body.profile).toStrictEqual({
-      nickname: '',
-      avatarUrl: 'avatars/default',
-    });
+    expect(body.profile.avatarUrl).toEqual('avatars/default');
   });
 
   test('로그아웃 요청에 대해 쿠키 삭제 후 204 상태코드를 반환한다.', async () => {
