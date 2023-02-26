@@ -11,9 +11,9 @@ import { GetProfileByUserIdInboundPort } from '../inbound-port/get-profile-by-us
 import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
-import { User } from '../../entities/user.entity';
 import { GetProfileByUserIdReqDto } from '../dtos/get-profile-by-user-id.req.dto';
 import { GetProfileByUserIdResDto } from '../dtos/get-profile-by-user-id.res.dto';
+import { TokenPayload } from '../../auth/types/token-payload';
 
 @Controller('api/profiles')
 export class GetProfileByUserIdController {
@@ -32,10 +32,10 @@ export class GetProfileByUserIdController {
   @UseGuards(AuthGuard())
   @HttpCode(200)
   getProfileByUserId(
-    @CurrentUser('user') currentUser: User,
+    @CurrentUser('user') currentUser: TokenPayload,
     @Body() body: GetProfileByUserIdReqDto,
   ): Promise<GetProfileByUserIdResDto> {
-    const currentUserId = currentUser.id;
+    const currentUserId = currentUser.userId;
     const { userId } = body;
     return this.getProfileByUserIdInboundPort.execute({
       currentUserId,

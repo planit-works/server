@@ -10,7 +10,7 @@ class Profile {
 
 export class VerifyResDto {
   @ApiProperty({ example: '329', description: '유저 ID' })
-  @Transform(({ obj }) => obj.sub)
+  @Transform(({ obj }) => obj.userId)
   @Expose()
   userId: number;
 

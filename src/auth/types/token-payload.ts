@@ -1,5 +1,5 @@
 export class TokenPayload {
-  sub: number;
+  userId: number;
   profileId: number;
   nickname: string;
   avatarUrl: string;

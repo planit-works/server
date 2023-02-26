@@ -10,12 +10,12 @@ import { SearchUsersByNicknameService } from '../services/search-users-by-nickna
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
-import { User } from '../../entities/user.entity';
 import {
   SearchUsersByNicknameInboundPort,
   SearchUsersByNicknameInboundPortOutputDto,
 } from '../inbound-port/search-users-by-nickname.inbound-port';
 import { SearchUsersByEmailReqQueryDto } from '../dtos/search-users-by-email.req.query.dto';
+import { TokenPayload } from '../../auth/types/token-payload';
 
 @Controller('api/users')
 export class SearchUsersByNicknameController {
@@ -32,12 +32,12 @@ export class SearchUsersByNicknameController {
   @UseGuards(AuthGuard())
   @HttpCode(200)
   async searchUsersByNickname(
-    @CurrentUser('user') currentUser: User,
+    @CurrentUser('user') currentUser: TokenPayload,
     @Query() query: SearchUsersByEmailReqQueryDto,
   ): Promise<SearchUsersByNicknameInboundPortOutputDto[]> {
     const { q: nickname } = query;
     return this.searchUsersByEmailInboundPort.execute({
-      userId: currentUser.id,
+      userId: currentUser.userId,
       nickname,
     });
   }
