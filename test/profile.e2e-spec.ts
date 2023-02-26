@@ -9,9 +9,12 @@ describe('Profile E2E 테스트', () => {
   let userId: number;
   let cookie: string[];
   let email = `test${randomNumber}@gmail.com`;
-  let nickname = '봄날의 햇살 수현';
-  let bio = "Hi! I'm KeonU";
+  let password = 'test1234!';
+  let nickname: string;
+  let bio: string;
   let avatarUrl = 'avatars/12345678';
+  let anotherUserId: number;
+  let anotherUserNickname: string;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -22,10 +25,18 @@ describe('Profile E2E 테스트', () => {
     await app.init();
     const res = await request(app.getHttpServer())
       .post('/api/auth')
-      .send({ email, password: 'test1234!' });
+      .send({ email, password });
 
     userId = res.body.userId;
+    nickname = res.body.profile.nickname;
     cookie = res.get('Set-Cookie');
+
+    const res2 = await request(app.getHttpServer())
+      .post('/api/auth')
+      .send({ email: `test${randomNumber + 1}@gmail.com`, password });
+
+    anotherUserId = res2.body.userId;
+    anotherUserNickname = res2.body.profile.nickname;
   });
 
   test('로그인하지 않은 상태에서 프로필 조회를 요청할 경우 401 에러를 반환한다.', async () => {
@@ -46,7 +57,7 @@ describe('Profile E2E 테스트', () => {
       id: userId,
       email,
       profile: {
-        nickname: null,
+        nickname,
         bio: null,
         avatarUrl: 'avatars/default',
       },
@@ -59,15 +70,15 @@ describe('Profile E2E 테스트', () => {
     const { body } = await request(app.getHttpServer())
       .post('/api/profiles')
       .set('Cookie', cookie)
-      .send({ userId: 1 })
+      .send({ userId: anotherUserId })
       .expect(200);
 
     expect(body).toStrictEqual({
-      id: 1,
+      id: anotherUserId,
       profile: {
-        nickname: '봄날의 햇살 수현',
-        bio: "Hi! I'm KeonU",
-        avatarUrl: 'avatars/12345678',
+        nickname: anotherUserNickname,
+        bio: null,
+        avatarUrl: 'avatars/default',
       },
       followingCount: 0,
       followerCount: 0,
@@ -92,7 +103,11 @@ describe('Profile E2E 테스트', () => {
     return request(app.getHttpServer())
       .patch('/api/profiles')
       .set('Cookie', cookie)
-      .send({ nickname, bio, avatarUrl })
+      .send({
+        nickname: '봄날의 햇살 수연',
+        bio: 'Hi, there!',
+        avatarUrl: 'avatars/1234567891011',
+      })
       .expect(204);
   });
 
@@ -100,7 +115,7 @@ describe('Profile E2E 테스트', () => {
     return request(app.getHttpServer())
       .patch('/api/profiles')
       .set('Cookie', cookie)
-      .send({ nickname, bio })
+      .send({ nickname: '봄날의 햇살 수연', bio: 'Hi, there!' })
       .expect(204);
   });
 

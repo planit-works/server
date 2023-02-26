@@ -28,7 +28,7 @@ export class LoginController {
   ): Promise<User> {
     const user = await this.loginInboundPort.execute(loginDto);
     const payload: TokenPayload = {
-      sub: user.id,
+      userId: user.id,
       profileId: user.profileId,
       nickname: user.profile.nickname,
       avatarUrl: user.profile.avatarUrl,

@@ -10,9 +10,9 @@ import {
 import { FollowService } from '../services/follow.service';
 import { FollowReqDto } from '../dtos/follow.req.dto';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
-import { User } from '../../entities/user.entity';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { TokenPayload } from '../../auth/types/token-payload';
 
 @Controller('api/follow')
 export class FollowController {
@@ -26,11 +26,11 @@ export class FollowController {
   @UseGuards(AuthGuard())
   @HttpCode(204)
   async follow(
-    @CurrentUser('user') currentUser: User,
+    @CurrentUser('user') currentUser: TokenPayload,
     @Body() followReqDto: FollowReqDto,
   ): Promise<void> {
     return this.followInboundPort.execute({
-      followerId: currentUser.id,
+      followerId: currentUser.userId,
       followingId: followReqDto.followingId,
     });
   }

@@ -31,7 +31,7 @@ export class SignupController {
   ): Promise<User> {
     const user = await this.singupInboundPort.execute(signupDto);
     const payload: TokenPayload = {
-      sub: user.id,
+      userId: user.id,
       profileId: user.profileId,
       nickname: user.profile.nickname,
       avatarUrl: user.profile.avatarUrl,

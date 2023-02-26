@@ -1,4 +1,3 @@
-import { User } from '../../entities/user.entity';
 import { AuthGuard } from '@nestjs/passport';
 import { UpdateProfileReqDto } from '../dtos/update-profile.req.dto';
 import { UpdateProfileService } from '../services/update-profile.service';
@@ -14,6 +13,7 @@ import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { UpdateProfileInboundPort } from '../inbound-port/update-profile.inbound-port';
 import { checkEmptyBody } from '../../common/utils/checkEmptyBody';
+import { TokenPayload } from '../../auth/types/token-payload';
 
 @Controller('api/profiles')
 export class UpdateProfileController {
@@ -28,7 +28,7 @@ export class UpdateProfileController {
   @UseGuards(AuthGuard())
   @HttpCode(204)
   updateProfile(
-    @CurrentUser('user') currentUser: User,
+    @CurrentUser('user') currentUser: TokenPayload,
     @Body() updateProfileReqDto: UpdateProfileReqDto,
   ) {
     checkEmptyBody(updateProfileReqDto);

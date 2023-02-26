@@ -9,15 +9,13 @@ services:
       - server
 
   server:
-    build:
-      context: .
-      dockerfile: dockerfiles/api-server.dockerfile
-    container_name: api-server
+    image: farenheim7/planit-dev-server:0.6
+    container_name: planit-server
     restart: always
     env_file:
       - .env.production
     ports:
-      - 8000:8000
+      - '8000:8000'
     command: ['npm', 'start']
 
   dev-server:
@@ -25,7 +23,7 @@ services:
     container_name: planit-dev-server
     restart: always
     ports:
-      - 8000:8000
+      - '8000:8000'
     command: ['npm', 'run', 'start:dev']
 
   npm:
@@ -33,4 +31,16 @@ services:
     working_dir: /server
     entrypoint: ['npm']
     volumes:
-      - ./src:/server
+      - .:/server
+
+  test-db:
+    image: postgres:14.6
+    container_name: 'planit-test'
+    restart: always
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_PASSWORD: 'postgres'
+      POSTGRES_DB: 'planit-test'
+
+

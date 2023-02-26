@@ -1,10 +1,10 @@
-import { User } from '../../entities/user.entity';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Controller, Get, HttpCode, UseGuards } from '@nestjs/common';
 import { Serialize } from '../../common/interceptors/serialize.interceptor';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { AuthGuard } from '@nestjs/passport';
 import { VerifyResDto } from '../dtos/verify.res.dto';
+import { TokenPayload } from '../types/token-payload';
 
 @Controller('api/auth')
 export class AuthVerifyController {
@@ -18,7 +18,7 @@ export class AuthVerifyController {
   @UseGuards(AuthGuard())
   @HttpCode(200)
   @Serialize(VerifyResDto)
-  async login(@CurrentUser('user') currentUser: User) {
+  async login(@CurrentUser('user') currentUser: TokenPayload) {
     return currentUser;
   }
 }

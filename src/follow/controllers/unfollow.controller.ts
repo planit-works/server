@@ -9,10 +9,10 @@ import {
 import { UnfollowService } from '../services/unfollow.service';
 import { AuthGuard } from '@nestjs/passport';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
-import { User } from '../../entities/user.entity';
 import { UnfollowReqDto } from '../dtos/unfollow.req.dto';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { UnfollowInboundPort } from '../inbound-port/unfollow.inbound-port';
+import { TokenPayload } from '../../auth/types/token-payload';
 
 @Controller('api/follow')
 export class UnfollowController {
@@ -26,10 +26,10 @@ export class UnfollowController {
   @UseGuards(AuthGuard())
   @HttpCode(204)
   async unfollow(
-    @CurrentUser('user') currentUser: User,
+    @CurrentUser('user') currentUser: TokenPayload,
     @Body() unfollowReqDto: UnfollowReqDto,
   ): Promise<void> {
-    const unfollowerId = currentUser.id;
+    const unfollowerId = currentUser.userId;
     const { unfollowingId } = unfollowReqDto;
     return this.unfollowInboundPort.execute({ unfollowerId, unfollowingId });
   }

@@ -7,8 +7,9 @@ import { UserModule } from './user/user.module';
 import { ProfileModule } from './profile/profile.module';
 import { AppController } from './app.controller';
 import * as cookieParser from 'cookie-parser';
-import { ormConfig } from './orm.config';
 import { FollowModule } from './follow/follow.module';
+import { DbConfigModule } from './config/db-config.module';
+import { TypeormConfigService } from './config/typeorm-config.service';
 
 @Module({
   imports: [
@@ -17,7 +18,11 @@ import { FollowModule } from './follow/follow.module';
       envFilePath: `.env.${process.env.NODE_ENV}`,
       cache: true,
     }),
-    TypeOrmModule.forRootAsync({ useFactory: ormConfig }),
+    TypeOrmModule.forRootAsync({
+      imports: [DbConfigModule],
+      useClass: TypeormConfigService,
+      inject: [TypeormConfigService],
+    }),
     UserModule,
     AuthModule,
     ProfileModule,
