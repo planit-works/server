@@ -75,15 +75,15 @@ jobs:
       - name: Setup Docker
         run: docker compose up -d test-db
 
-      - name: Cache dependencies
-        uses: actions/cache@v3
-        id: cache
-        with:
-          path: ~/.npm
-          key: npm-deps-${{ hashFiles('**/package-lock.json') }}
+      # - name: Cache dependencies
+      #   uses: actions/cache@v3
+      #   id: cache
+      #   with:
+      #     path: ~/.npm
+      #     key: npm-deps-${{ hashFiles('**/package-lock.json') }}
 
       - name: Install Dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
+        # if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: E2E Test
