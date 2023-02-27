@@ -42,5 +42,3 @@ services:
     environment:
       POSTGRES_PASSWORD: 'postgres'
       POSTGRES_DB: 'planit-test'
-
-

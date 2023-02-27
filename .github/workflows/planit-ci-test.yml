@@ -5,7 +5,28 @@ on:
     branches: [main]
 
 jobs:
+  setup:
+    - name: Get Code from Repository
+      uses: actions/checkout@v3
+
+    - name: Use Node.js v.18.
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18.14.2'
+
+    - name: Cache dependencies
+      uses: actions/cache@v3
+      id: cache
+      with:
+        path: ~/.npm
+        key: npm-deps-${{ hashFiles('**/package-lock.json') }}
+
+    - name: Install Dependencies
+      if: steps.cache.outputs.cache-hit != 'true'
+      run: npm ci
+
   unit-test:
+    needs: setup
     runs-on: ubuntu-20.04
 
     steps:
@@ -17,7 +38,15 @@ jobs:
         with:
           node-version: '18.14.2'
 
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        id: cache
+        with:
+          path: ~/.npm
+          key: npm-deps-${{ hashFiles('**/package-lock.json') }}
+
       - name: Install Dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Build
@@ -25,3 +54,33 @@ jobs:
 
       - name: Unit Test
         run: npm run test:ci
+
+  e2e-test:
+    needs: setup
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Setup Docker
+        run: docker compose up -d test-db
+
+      - name: Get Code from Repository
+        uses: actions/checkout@v3
+
+      - name: Use Node.js v.18.
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.14.2'
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        id: cache
+        with:
+          path: ~/.npm
+          key: npm-deps-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install Dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Unit Test
+        run: npm run test:e2e
