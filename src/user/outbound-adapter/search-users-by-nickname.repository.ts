@@ -21,11 +21,11 @@ export class SearchUsersByNicknameRepository
       where: { nickname: Like(`${nickname}%`) },
       relations: { user: true },
       select: {
-        id: true,
+        profileId: true,
         nickname: true,
-        avatarUrl: true,
+        image: { url: true },
         bio: true,
-        user: { id: true },
+        user: { userId: true },
       },
     })) as unknown as SearchUsersByNicknameOutboundPortOutputDto[];
   }

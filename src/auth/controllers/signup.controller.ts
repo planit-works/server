@@ -1,4 +1,3 @@
-import { User } from '../../entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
 import { Controller, Post, Body, Res, Inject } from '@nestjs/common';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
@@ -6,7 +5,10 @@ import { SignupService } from '../services';
 import { SignupReqDto, SignupResDto } from '../dtos';
 import { Serialize } from '../../common/interceptors/serialize.interceptor';
 import { Response } from 'express';
-import { SignupInboundPort } from '../inbound-port/signup.inbound-port';
+import {
+  SignupInboundPort,
+  SignupInboundPortOutputDto,
+} from '../inbound-port/signup.inbound-port';
 import { TokenPayload } from '../types/token-payload';
 
 @Controller('api/auth')
@@ -28,10 +30,10 @@ export class SignupController {
   async signup(
     @Body() signupDto: SignupReqDto,
     @Res({ passthrough: true }) response: Response,
-  ): Promise<User> {
+  ): Promise<SignupInboundPortOutputDto> {
     const user = await this.singupInboundPort.execute(signupDto);
     const payload: TokenPayload = {
-      userId: user.id,
+      userId: user.userId,
       profileId: user.profileId,
       nickname: user.profile.nickname,
       avatarUrl: user.profile.avatarUrl,
@@ -42,7 +44,7 @@ export class SignupController {
     });
     response.cookie('Authorization', accessToken, {
       httpOnly: true,
-      sameSite: 'none',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
       secure: process.env.NODE_ENV === 'production',
     });
     return user;

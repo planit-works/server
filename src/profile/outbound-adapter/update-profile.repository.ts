@@ -15,7 +15,7 @@ export class UpdateProfileRepository implements UpdateProfileOutboundPort {
 
   async execute(params: UpdateProfileOutboundPortInputDto): Promise<void> {
     const { profileId, ...updateInfo } = params;
-    const profile = await this.profileRepository.findOneBy({ id: profileId });
+    const profile = await this.profileRepository.findOneBy({ profileId });
     Object.assign(profile, updateInfo);
     await this.profileRepository.save(profile);
     return;

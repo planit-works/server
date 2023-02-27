@@ -1,10 +1,11 @@
 import { Profile } from '../../entities/profile.entity';
 
 export interface GetUserByEmailOutboundPortOutputDto {
-  id: number;
-  email: string;
-  password: string;
+  userId: number;
   profileId: number;
+  password: {
+    password: string;
+  };
   profile: Profile;
 }
 

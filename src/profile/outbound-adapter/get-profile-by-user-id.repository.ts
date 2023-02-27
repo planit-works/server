@@ -19,11 +19,11 @@ export class GetProfileByUserIdRepository
     userId: number,
   ): Promise<GetProfileByUserIdOutboundPortOutputDto> {
     return (await this.userRepository.findOne({
-      where: { id: userId },
+      where: { userId },
       select: {
-        id: true,
+        userId: true,
         email: true,
-        profile: { bio: true, nickname: true, avatarUrl: true },
+        profile: { bio: true, nickname: true },
       },
       relations: {
         profile: true,

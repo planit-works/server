@@ -30,13 +30,12 @@ export class Profile {
   @DeleteDateColumn()
   deletedAt: Date;
 
-  @ManyToOne(() => Image)
+  @ManyToOne(() => Image, { eager: true })
   @JoinColumn({ name: 'imageId' })
   image: Image;
 
   @OneToOne(() => User, (user) => user.profile, {
     cascade: ['soft-remove'],
-    eager: true,
   })
   user?: User;
 }

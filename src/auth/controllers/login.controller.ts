@@ -1,5 +1,7 @@
-import { User } from '../../entities/user.entity';
-import { LoginInboundPort } from '../inbound-port/login.inbound-port';
+import {
+  LoginInboundPort,
+  LoginInboundPortOutputDto,
+} from '../inbound-port/login.inbound-port';
 import { TokenPayload } from '../types/token-payload';
 import { Controller, Post, Body, HttpCode, Res, Inject } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -25,10 +27,10 @@ export class LoginController {
   async login(
     @Body() loginDto: LoginReqDto,
     @Res({ passthrough: true }) response: Response,
-  ): Promise<User> {
+  ): Promise<LoginInboundPortOutputDto> {
     const user = await this.loginInboundPort.execute(loginDto);
     const payload: TokenPayload = {
-      userId: user.id,
+      userId: user.userId,
       profileId: user.profileId,
       nickname: user.profile.nickname,
       avatarUrl: user.profile.avatarUrl,
@@ -38,7 +40,7 @@ export class LoginController {
     });
     response.cookie('Authorization', accessToken, {
       httpOnly: true,
-      sameSite: 'none',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
       secure: process.env.NODE_ENV === 'production',
     });
     return user;
