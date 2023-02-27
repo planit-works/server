@@ -63,9 +63,6 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-      - name: Setup Docker
-        run: docker compose up -d test-db
-
       - name: Get Code from Repository
         uses: actions/checkout@v3
 
@@ -73,6 +70,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18.14.2'
+
+      - name: Setup Docker
+        run: docker compose up -d test-db
 
       - name: Cache dependencies
         uses: actions/cache@v3
@@ -85,5 +85,5 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
 
-      - name: Unit Test
+      - name: E2E Test
         run: npm run test:e2e
