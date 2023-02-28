@@ -21,7 +21,7 @@ jobs:
         uses: actions/cache@v3
         id: cache
         with:
-          path: ~/.npm
+          path: '**/node_modules'
           key: npm-deps-${{ hashFiles('**/package-lock.json') }}
 
       - name: Install Dependencies
@@ -45,7 +45,7 @@ jobs:
         uses: actions/cache@v3
         id: cache
         with:
-          path: ~/.npm
+          path: '**/node_modules'
           key: npm-deps-${{ hashFiles('**/package-lock.json') }}
 
       - name: Install Dependencies
@@ -78,7 +78,7 @@ jobs:
         uses: actions/cache@v3
         id: cache
         with:
-          path: ~/.npm
+          path: '**/node_modules'
           key: npm-deps-${{ hashFiles('**/package-lock.json') }}
 
       - name: Install Dependencies
