@@ -12,8 +12,6 @@ services:
     image: farenheim7/planit-dev-server:0.6
     container_name: planit-server
     restart: always
-    # env_file:
-    #   - .env.production
     ports:
       - '8000:8000'
     command: ['npm', 'start']

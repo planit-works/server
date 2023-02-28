@@ -8,15 +8,15 @@ import * as bcrypt from 'bcrypt';
 import { User } from '../../entities/user.entity';
 
 class MockGetUserByEmailOutboundPort implements GetUserByEmailOutboundPort {
-  private readonly users: GetUserByEmailOutboundPortOutputDto[];
+  private readonly users: User[];
 
-  constructor(users: GetUserByEmailOutboundPortOutputDto[]) {
+  constructor(users: User[]) {
     this.users = users;
   }
 
   async execute(email: string) {
     const user = this.users.find((user) => user.email === email);
-    return Promise.resolve(user);
+    return Promise.resolve(user as GetUserByEmailOutboundPortOutputDto);
   }
 }
 
@@ -30,9 +30,8 @@ describe('LoginService 유닛 테스트', () => {
     hashedPassword = await bcrypt.hash(password, 12);
     users = [
       {
-        id: 1,
+        userId: 1,
         email: 'test1234@gmail.com',
-        password: hashedPassword,
         profileId: 1,
         profile: null,
       },
