@@ -11,8 +11,7 @@ export class Role {
   roleId: number;
 
   @Column({
-    type: 'varchar',
-    length: 20,
+    type: 'enum',
     enum: [UserRole.ADMIN, UserRole.BASIC],
   })
   role: string;

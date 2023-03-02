@@ -28,7 +28,7 @@ export class Profile {
   bio: string;
 
   @DeleteDateColumn()
-  deletedAt: Date;
+  deletedAt?: Date;
 
   @ManyToOne(() => Image, { eager: true })
   @JoinColumn({ name: 'imageId' })

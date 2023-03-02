@@ -11,18 +11,18 @@ import { User } from './user.entity';
 @Entity({ name: 'password' })
 export class Password {
   @PrimaryGeneratedColumn()
-  passwordId: number;
+  passwordId?: number;
 
   @Column()
-  userId: number;
+  userId?: number;
 
   @OneToOne(() => User, (user) => user.password)
   @JoinColumn({ name: 'userId' })
-  user: User;
+  user?: User;
 
   @Column({ type: 'varchar', length: 255, nullable: false })
   password: string;
 
   @UpdateDateColumn({})
-  updatedAt: Date;
+  updatedAt?: Date;
 }

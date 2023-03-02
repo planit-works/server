@@ -21,7 +21,7 @@ export class User {
   @Column()
   profileId: number;
 
-  @Column({ default: 1 })
+  @Column({ default: 2 })
   roleId?: number;
 
   @Index()
