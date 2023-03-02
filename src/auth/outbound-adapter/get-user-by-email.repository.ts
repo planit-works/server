@@ -14,9 +14,23 @@ export class GetUserByEmailRepository implements GetUserByEmailOutboundPort {
   ) {}
 
   async execute(email: string): Promise<GetUserByEmailOutboundPortOutputDto> {
-    return await this.userRepository.findOne({
+    return (await this.userRepository.findOne({
+      select: {
+        userId: true,
+        password: {
+          password: true,
+          updatedAt: true,
+        },
+        profileId: true,
+        profile: {
+          nickname: true,
+          image: {
+            url: true,
+          },
+        },
+      },
       where: { email },
-      relations: { profile: true },
-    });
+      relations: { password: true, profile: true },
+    })) as unknown as GetUserByEmailOutboundPortOutputDto;
   }
 }

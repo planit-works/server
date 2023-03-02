@@ -1,11 +1,12 @@
 export interface GetProfileByUserIdOutboundPortOutputDto {
-  id: number;
+  userId: number;
   email: string;
-  // userId: number;
   profile: {
     nickname: string;
-    avatarUrl: string;
     bio: string;
+    image: {
+      url: string;
+    };
   };
 }
 

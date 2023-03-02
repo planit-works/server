@@ -35,7 +35,13 @@ let follows: Partial<Follow>[];
 
 describe('UnfollowService Unit Testing', () => {
   beforeEach(() => {
-    users = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }];
+    users = [
+      { userId: 1 },
+      { userId: 2 },
+      { userId: 3 },
+      { userId: 4 },
+      { userId: 5 },
+    ];
 
     follows = [
       { followerId: 1, followingId: 2 },

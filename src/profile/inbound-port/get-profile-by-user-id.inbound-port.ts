@@ -4,8 +4,8 @@ export interface GetProfileByUserIdInboundPortInputDto {
 }
 
 export interface GetProfileByUserIdInboundPortOutputDto {
-  id: number;
-  email?: string;
+  userId: number;
+  email: string | null;
   profile: {
     nickname: string;
     avatarUrl: string;
@@ -13,6 +13,7 @@ export interface GetProfileByUserIdInboundPortOutputDto {
   };
   followerCount: number;
   followingCount: number;
+  isFollowing: boolean;
 }
 
 export interface GetProfileByUserIdInboundPort {

@@ -11,21 +11,22 @@ import {
   DeleteDateColumn,
   Index,
 } from 'typeorm';
+import { Password } from './password.entity';
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
-  id: number;
+  userId: number;
+
+  @Column()
+  profileId: number;
+
+  @Column({ default: 2 })
+  roleId?: number;
 
   @Index()
   @Column()
   email: string;
-
-  @Column()
-  password: string;
-
-  @Column()
-  profileId: number;
 
   @CreateDateColumn()
   createdAt?: Date;
@@ -34,8 +35,11 @@ export class User {
   deletedAt?: Date;
 
   @OneToOne(() => Profile, (profile) => profile.user)
-  @JoinColumn()
+  @JoinColumn({ name: 'profileId' })
   profile: Profile;
+
+  @OneToOne(() => Password, (password) => password.user)
+  password?: Password;
 
   @OneToMany(() => Follow, (follow) => follow.following)
   following?: Follow[];

@@ -12,7 +12,7 @@ import { FollowReqDto } from '../dtos/follow.req.dto';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { TokenPayload } from '../../auth/types/token-payload';
+import { TokenPayload } from '../../common/types/token-payload';
 
 @Controller('api/follow')
 export class FollowController {

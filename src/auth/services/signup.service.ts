@@ -48,7 +48,13 @@ export class SignupService implements SignupInboundPort {
       password: hashedPassword,
       randomNickname,
     });
-
-    return user;
+    return {
+      userId: user.userId,
+      profileId: user.profileId,
+      profile: {
+        nickname: user.profile.nickname,
+        avatarUrl: 'avatars/default',
+      },
+    };
   }
 }

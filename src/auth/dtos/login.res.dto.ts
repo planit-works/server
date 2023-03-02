@@ -1,5 +1,5 @@
-import { Expose, Transform } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
+import { Expose } from 'class-transformer';
 
 class Profile {
   profile: {
@@ -10,7 +10,6 @@ class Profile {
 
 export class LoginResDto {
   @ApiProperty({ example: '329', description: '유저 ID' })
-  @Transform(({ obj }) => obj.id)
   @Expose()
   userId: number;
 
@@ -20,12 +19,6 @@ export class LoginResDto {
       avatarUrl: 'avatars/default',
     },
     description: '프로필 정보',
-  })
-  @Transform(({ obj }) => {
-    return {
-      nickname: obj.profile.nickname || '',
-      avatarUrl: obj.profile.avatarUrl,
-    };
   })
   @Expose()
   profile: Profile;

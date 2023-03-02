@@ -4,7 +4,7 @@ import { Serialize } from '../../common/interceptors/serialize.interceptor';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { AuthGuard } from '@nestjs/passport';
 import { VerifyResDto } from '../dtos/verify.res.dto';
-import { TokenPayload } from '../types/token-payload';
+import { TokenPayload } from '../../common/types/token-payload';
 
 @Controller('api/auth')
 export class AuthVerifyController {

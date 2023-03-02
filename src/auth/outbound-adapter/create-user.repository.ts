@@ -8,27 +8,32 @@ import {
   CreateUserOutboundPortInputDto,
 } from '../outbound-port/create-user.outbound-port';
 import { Connection } from 'typeorm';
-import { query } from 'express';
+import { Password } from '../../entities/password.entity';
 
 @Injectable()
 export class CreateUserRepository implements CreateUserOutboundPort {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
     @InjectRepository(Profile) private profileRepository: Repository<Profile>,
+    @InjectRepository(Password)
+    private passwordRepository: Repository<Password>,
     private connection: Connection,
   ) {}
 
   async execute(params: CreateUserOutboundPortInputDto): Promise<User> {
-    const { randomNickname: nickname } = params;
+    const { email, password, randomNickname: nickname } = params;
     const queryRunner = this.connection.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
-    let user = this.userRepository.create(params);
+    let user = this.userRepository.create({ email });
+    const passwordEntity = this.passwordRepository.create({ password });
     let profile = this.profileRepository.create({ nickname });
     try {
       profile = await queryRunner.manager.save(profile);
-      user.profile = profile;
+      user.profileId = profile.profileId;
       user = await queryRunner.manager.save(user);
+      passwordEntity.userId = user.userId;
+      await queryRunner.manager.save(passwordEntity);
       await queryRunner.commitTransaction();
     } catch (err) {
       await queryRunner.rollbackTransaction();

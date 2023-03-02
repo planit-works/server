@@ -9,6 +9,10 @@ import {
 import { GetProfileByUserIdService } from './get-profile-by-user-id.service';
 import { Follow } from '../../entities/follow.entity';
 import { BadRequestException } from '@nestjs/common';
+import {
+  CheckFollowingOutboundPort,
+  CheckFollowingOutboundPortInputDto,
+} from '../../follow/outbound-port/check-following.outbound-port';
 
 class MockGetProfileByIdOutboundPort implements GetProfileByUserIdOutboundPort {
   constructor(private users: GetProfileByUserIdOutboundPortOutputDto[]) {
@@ -17,7 +21,7 @@ class MockGetProfileByIdOutboundPort implements GetProfileByUserIdOutboundPort {
   async execute(
     userId: number,
   ): Promise<GetProfileByUserIdOutboundPortOutputDto> {
-    const user = this.users.find((user) => user.id === userId);
+    const user = this.users.find((user) => user.userId === userId);
     if (!user) {
       throw new BadRequestException('Bad Request');
     }
@@ -39,6 +43,19 @@ class MockGetFollowCountOutboundPort implements GetFollowCountOutboundPort {
   }
 }
 
+class MockCheckFollowingOutboundPort implements CheckFollowingOutboundPort {
+  constructor(private follows: Partial<Follow>[]) {}
+
+  async execute(params: CheckFollowingOutboundPortInputDto): Promise<boolean> {
+    const { userId, followingId } = params;
+    const follow = this.follows.findIndex(
+      (follow) =>
+        follow.followerId === userId && follow.followingId === followingId,
+    );
+    return follow !== -1;
+  }
+}
+
 let getProfileByUserIdService: GetProfileByUserIdService;
 let users: GetProfileByUserIdOutboundPortOutputDto[];
 let follows: Partial<Follow>[];
@@ -47,12 +64,14 @@ describe('GetProfileByUserIdService Unit Test', () => {
   beforeEach(async () => {
     users = [
       {
-        id: 1,
+        userId: 1,
         email: 'test1@gmail.com',
         profile: {
           nickname: 'kku',
-          avatarUrl: 'avatars/123456789',
           bio: 'hi!',
+          image: {
+            url: 'avatars/default',
+          },
         },
       },
     ];
@@ -72,6 +91,7 @@ describe('GetProfileByUserIdService Unit Test', () => {
     getProfileByUserIdService = new GetProfileByUserIdService(
       new MockGetProfileByIdOutboundPort(users),
       new MockGetFollowCountOutboundPort(follows),
+      new MockCheckFollowingOutboundPort(follows),
     );
   });
 
@@ -91,32 +111,35 @@ describe('GetProfileByUserIdService Unit Test', () => {
       userId: 1,
     });
     expect(result).toStrictEqual({
-      id: 1,
+      userId: 1,
       email: 'test1@gmail.com',
       profile: {
         nickname: 'kku',
-        avatarUrl: 'avatars/123456789',
+        avatarUrl: 'avatars/default',
         bio: 'hi!',
       },
       followingCount: 2,
       followerCount: 5,
+      isFollowing: null,
     });
   });
 
-  test('다른 유저의 프로필을 조회할 경우 email을 제외한 프로필을 반환한다.', async () => {
+  test('다른 유저의 프로필을 조회할 경우 email이 null인 프로필을 반환한다.', async () => {
     const result = await getProfileByUserIdService.execute({
       currentUserId: 2,
       userId: 1,
     });
     expect(result).toStrictEqual({
-      id: 1,
+      userId: 1,
+      email: null,
       profile: {
         nickname: 'kku',
-        avatarUrl: 'avatars/123456789',
+        avatarUrl: 'avatars/default',
         bio: 'hi!',
       },
       followingCount: 2,
       followerCount: 5,
+      isFollowing: true,
     });
   });
 });

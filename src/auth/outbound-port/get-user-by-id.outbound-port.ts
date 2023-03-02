@@ -1,5 +1,5 @@
 export interface GetUserByIdOutboundPortOutputDto {
-  id: number;
+  userId: number;
   profileId: number;
 }
 

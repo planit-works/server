@@ -4,24 +4,38 @@ import {
   Column,
   Index,
   OneToOne,
+  JoinColumn,
+  DeleteDateColumn,
+  ManyToOne,
 } from 'typeorm';
 import { User } from './user.entity';
+import { Image } from './image.entity';
 
 @Entity()
 export class Profile {
   @PrimaryGeneratedColumn()
-  id: number;
+  profileId: number;
 
-  @Column({ type: 'text', nullable: true })
-  bio: string;
+  @Column({ default: 1 })
+  @JoinColumn()
+  imageId: number;
 
   @Index()
   @Column({ type: 'varchar' })
   nickname: string;
 
-  @Column({ type: 'varchar', default: 'avatars/default' })
-  avatarUrl: string;
+  @Column({ type: 'text', nullable: true })
+  bio: string;
 
-  @OneToOne(() => User, (user) => user.profile)
+  @DeleteDateColumn()
+  deletedAt?: Date;
+
+  @ManyToOne(() => Image, { eager: true })
+  @JoinColumn({ name: 'imageId' })
+  image: Image;
+
+  @OneToOne(() => User, (user) => user.profile, {
+    cascade: ['soft-remove'],
+  })
   user?: User;
 }

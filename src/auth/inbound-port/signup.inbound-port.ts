@@ -6,11 +6,12 @@ export interface SignupInboundPortInputDto {
 }
 
 export interface SignupInboundPortOutputDto {
-  id: number;
-  email: string;
-  password: string;
+  userId: number;
   profileId: number;
-  profile: Profile;
+  profile: {
+    nickname: string;
+    avatarUrl: string;
+  };
 }
 
 export interface SignupInboundPort {

@@ -11,6 +11,6 @@ export class CheckUserExistRepository implements CheckUserExistOutboundPort {
   ) {}
 
   async execute(userId: number): Promise<boolean> {
-    return await this.userRepository.exist({ where: { id: userId } });
+    return await this.userRepository.exist({ where: { userId } });
   }
 }

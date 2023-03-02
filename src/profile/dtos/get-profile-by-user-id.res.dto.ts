@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class GetProfileByUserIdResDto {
   @ApiProperty({ example: '329', description: '유저 ID' })
-  id: number;
+  userId: number;
 
   @ApiProperty({ example: 'test1234@gmail.com', description: '유저 이메일' })
   email?: string;

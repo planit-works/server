@@ -1,4 +1,4 @@
-import { TokenPayload } from './types/token-payload';
+import { TokenPayload } from '../common/types/token-payload';
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';

@@ -15,8 +15,8 @@ export class GetUserByIdRepository implements GetUserByIdOutboundPort {
 
   async execute(userId: number): Promise<GetUserByIdOutboundPortOutputDto> {
     return await this.userRepository.findOne({
-      where: { id: userId },
-      select: { id: true, profileId: true },
+      where: { userId },
+      select: { userId: true, profileId: true },
     });
   }
 }

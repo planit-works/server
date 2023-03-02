@@ -18,10 +18,12 @@ import { GetUserByEmailRepository } from './outbound-adapter/get-user-by-email.r
 import { CreateUserRepository } from './outbound-adapter/create-user.repository';
 import { GetUserByIdRepository } from './outbound-adapter/get-user-by-id.repository';
 import { CheckNicknameDuplicateRepository } from '../profile/outbound-adapter/check-nickname-duplicate.repository';
+import { Password } from '../entities/password.entity';
+import { Image } from '../entities/image.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Profile]),
+    TypeOrmModule.forFeature([User, Profile, Password]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.registerAsync({
       inject: [ConfigService],

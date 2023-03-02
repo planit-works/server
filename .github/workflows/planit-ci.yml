@@ -1,0 +1,64 @@
+name: Planit Server CI
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  unit-test:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Get Code from Repository
+        uses: actions/checkout@v3
+
+      - name: Use Node.js v.18.
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.14.2'
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        id: cache-dependencies
+        with:
+          path: '**/node_modules'
+          key: npm-deps-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install Dependencies
+        if: ${{ steps.cache-dependencies.outputs.cache-hit != 'true' }}
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Unit Test
+        run: npm run test:ci
+
+  e2e-test:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Get Code from Repository
+        uses: actions/checkout@v3
+
+      - name: Use Node.js v.18.
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.14.2'
+
+      - name: Setup Docker
+        run: docker compose up -d test-db
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        id: cache
+        with:
+          path: '**/node_modules'
+          key: npm-deps-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install Dependencies
+        if: ${{ steps.cache-dependencies.outputs.cache-hit != 'true' }}
+        run: npm ci
+
+      - name: E2E Test
+        run: npm run test:e2e

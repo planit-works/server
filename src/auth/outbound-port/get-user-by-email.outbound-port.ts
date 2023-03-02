@@ -1,11 +1,15 @@
-import { Profile } from '../../entities/profile.entity';
-
 export interface GetUserByEmailOutboundPortOutputDto {
-  id: number;
-  email: string;
-  password: string;
+  userId: number;
   profileId: number;
-  profile: Profile;
+  password: {
+    password: string;
+  };
+  profile: {
+    nickname: string;
+    image: {
+      url: string;
+    };
+  };
 }
 
 export interface GetUserByEmailOutboundPort {
