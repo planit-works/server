@@ -9,7 +9,7 @@ import {
   SignupInboundPort,
   SignupInboundPortOutputDto,
 } from '../inbound-port/signup.inbound-port';
-import { TokenPayload } from '../types/token-payload';
+import { TokenPayload } from '../../common/types/token-payload';
 
 @Controller('api/auth')
 export class SignupController {

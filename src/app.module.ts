@@ -10,6 +10,7 @@ import * as cookieParser from 'cookie-parser';
 import { FollowModule } from './follow/follow.module';
 import { DbConfigModule } from './config/db-config.module';
 import { TypeormConfigService } from './config/typeorm-config.service';
+import { ScheduleModule } from './schedule/schedule.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { TypeormConfigService } from './config/typeorm-config.service';
     AuthModule,
     ProfileModule,
     FollowModule,
+    ScheduleModule,
   ],
   controllers: [AppController],
   providers: [

@@ -15,7 +15,7 @@ import {
   SearchUsersByNicknameInboundPortOutputDto,
 } from '../inbound-port/search-users-by-nickname.inbound-port';
 import { SearchUsersByEmailReqQueryDto } from '../dtos/search-users-by-email.req.query.dto';
-import { TokenPayload } from '../../auth/types/token-payload';
+import { TokenPayload } from '../../common/types/token-payload';
 
 @Controller('api/users')
 export class SearchUsersByNicknameController {

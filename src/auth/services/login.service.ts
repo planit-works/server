@@ -20,7 +20,6 @@ export class LoginService implements LoginInboundPort {
   ): Promise<LoginInboundPortOutputDto> {
     const { email, password } = params;
     const user = await this.getUserByEamilOutboundPort.execute(email);
-    console.log(user);
     if (!user || !(await bcrypt.compare(password, user.password.password))) {
       throw new BadRequestException('이메일/비밀번호 재확인');
     }

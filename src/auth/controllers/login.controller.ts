@@ -2,7 +2,6 @@ import {
   LoginInboundPort,
   LoginInboundPortOutputDto,
 } from '../inbound-port/login.inbound-port';
-import { TokenPayload } from '../types/token-payload';
 import { Controller, Post, Body, HttpCode, Res, Inject } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
@@ -10,6 +9,7 @@ import { Response } from 'express';
 import { LoginService } from '../services/login.service';
 import { LoginReqDto, LoginResDto } from '../dtos';
 import { Serialize } from '../../common/interceptors/serialize.interceptor';
+import { TokenPayload } from '../../common/types/token-payload';
 
 @Controller('api/auth')
 export class LoginController {

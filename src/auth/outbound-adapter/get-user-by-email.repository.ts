@@ -24,6 +24,9 @@ export class GetUserByEmailRepository implements GetUserByEmailOutboundPort {
         profileId: true,
         profile: {
           nickname: true,
+          image: {
+            url: true,
+          },
         },
       },
       where: { email },

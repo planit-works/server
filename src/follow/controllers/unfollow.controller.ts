@@ -12,7 +12,7 @@ import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { UnfollowReqDto } from '../dtos/unfollow.req.dto';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { UnfollowInboundPort } from '../inbound-port/unfollow.inbound-port';
-import { TokenPayload } from '../../auth/types/token-payload';
+import { TokenPayload } from '../../common/types/token-payload';
 
 @Controller('api/follow')
 export class UnfollowController {

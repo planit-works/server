@@ -13,7 +13,7 @@ import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { UpdateProfileInboundPort } from '../inbound-port/update-profile.inbound-port';
 import { checkEmptyBody } from '../../common/utils/checkEmptyBody';
-import { TokenPayload } from '../../auth/types/token-payload';
+import { TokenPayload } from '../../common/types/token-payload';
 
 @Controller('api/profiles')
 export class UpdateProfileController {
