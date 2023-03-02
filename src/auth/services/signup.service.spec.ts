@@ -90,14 +90,4 @@ describe('SignupService 유닛 테스트', () => {
       }),
     ).rejects.toThrow(ConflictException);
   });
-
-  // test('해쉬화된 비밀번호를 가진 유저를 생성한다', async () => {
-  //   const user = await signupService.execute({
-  //     email: 'test1235@gmail.com',
-  //     password: 'test1234!',
-  //   });
-  //   const hashedPassword = user.password.password;
-  //   expect(hashedPassword).not.toEqual('test1234!');
-  //   expect(hashedPassword.length).toBeGreaterThan(30);
-  // });
 });

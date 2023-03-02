@@ -54,7 +54,7 @@ describe('Profile E2E 테스트', () => {
       .expect(200);
 
     expect(body).toStrictEqual({
-      id: userId,
+      userId,
       email,
       profile: {
         nickname,
@@ -63,6 +63,7 @@ describe('Profile E2E 테스트', () => {
       },
       followingCount: 0,
       followerCount: 0,
+      isFollowing: null,
     });
   });
 
@@ -74,7 +75,8 @@ describe('Profile E2E 테스트', () => {
       .expect(200);
 
     expect(body).toStrictEqual({
-      id: anotherUserId,
+      userId: anotherUserId,
+      email: null,
       profile: {
         nickname: anotherUserNickname,
         bio: null,
@@ -82,6 +84,7 @@ describe('Profile E2E 테스트', () => {
       },
       followingCount: 0,
       followerCount: 0,
+      isFollowing: false,
     });
   });
 

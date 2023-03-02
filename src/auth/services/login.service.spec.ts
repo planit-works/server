@@ -5,24 +5,30 @@ import {
 import { LoginService } from './login.service';
 import { BadRequestException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import { User } from '../../entities/user.entity';
+
+interface MockUser extends GetUserByEmailOutboundPortOutputDto {
+  email: string;
+}
 
 class MockGetUserByEmailOutboundPort implements GetUserByEmailOutboundPort {
-  private readonly users: User[];
+  private readonly users: MockUser[];
 
-  constructor(users: User[]) {
+  constructor(users: MockUser[]) {
     this.users = users;
   }
 
   async execute(email: string) {
     const user = this.users.find((user) => user.email === email);
-    return Promise.resolve(user as GetUserByEmailOutboundPortOutputDto);
+    if (user) {
+      delete user.email;
+    }
+    return Promise.resolve(user);
   }
 }
 
 let loginService: LoginService;
 let hashedPassword: string;
-let users: User[];
+let users: MockUser[];
 let password = 'test1234!';
 
 describe('LoginService 유닛 테스트', () => {
@@ -31,9 +37,17 @@ describe('LoginService 유닛 테스트', () => {
     users = [
       {
         userId: 1,
+        password: {
+          password: hashedPassword,
+        },
         email: 'test1234@gmail.com',
         profileId: 1,
-        profile: null,
+        profile: {
+          nickname: '봄날의 햇살 수연',
+          image: {
+            url: 'avatars/default',
+          },
+        },
       },
     ];
     loginService = new LoginService(new MockGetUserByEmailOutboundPort(users));
@@ -64,11 +78,12 @@ describe('LoginService 유닛 테스트', () => {
       password: password,
     });
     expect(result).toStrictEqual({
-      id: 1,
-      email: 'test1234@gmail.com',
-      password: hashedPassword,
+      userId: 1,
       profileId: 1,
-      profile: null,
+      profile: {
+        nickname: '봄날의 햇살 수연',
+        avatarUrl: 'avatars/default',
+      },
     });
   });
 });
