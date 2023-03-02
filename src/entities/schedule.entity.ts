@@ -15,16 +15,22 @@ export class Schedule {
   @Column()
   ymdId: number;
 
-  @Column({ type: 'char', length: 4, nullable: true })
-  startAt: string;
+  @Column({ type: 'varchar', length: 20, nullable: false })
+  title: string;
+
+  @Column({ type: 'text', nullable: true })
+  description?: string;
 
   @Column({ type: 'char', length: 4, nullable: true })
-  endAt: string;
+  startAt?: string;
+
+  @Column({ type: 'char', length: 4, nullable: true })
+  endAt?: string;
 
   @Column({ type: 'bit', default: 0 })
   done: number;
 
   @OneToOne(() => Ymd)
   @JoinColumn({ name: 'ymdId' })
-  ymd: Ymd;
+  ymd?: Ymd;
 }
