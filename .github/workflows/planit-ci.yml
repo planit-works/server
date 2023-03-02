@@ -6,7 +6,6 @@ on:
 
 jobs:
   unit-test:
-    needs: setup
     runs-on: ubuntu-20.04
 
     steps:
@@ -36,7 +35,6 @@ jobs:
         run: npm run test:ci
 
   e2e-test:
-    needs: setup
     runs-on: ubuntu-20.04
 
     steps:
