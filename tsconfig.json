@@ -19,6 +19,5 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "noEmitOnError": true,
-    "allowJs": true
   }
 }

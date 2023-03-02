@@ -14,7 +14,7 @@ export class TypeormConfigService implements TypeOrmOptionsFactory {
       username: this.configService.get<string>('DB_USERNAME'),
       password: this.configService.get<string>('DB_PASSWORD'),
       database: this.configService.get<string>('DB_NAME'),
-      synchronize: process.env.NODE_ENV !== 'production',
+      synchronize: process.env.NODE_ENV === 'development',
       logging: process.env.NODE_ENV === 'development',
       entities:
         process.env.NODE_ENV !== 'test'
@@ -22,6 +22,7 @@ export class TypeormConfigService implements TypeOrmOptionsFactory {
           : ['src/entities/*.entity.ts'],
       connectTimeoutMS: 0,
       poolSize: 0,
+      useUTC: false,
     };
   }
 }
