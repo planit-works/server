@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 jobs:
-  unit-test:
+  build:
     runs-on: ubuntu-20.04
 
     steps:
@@ -31,11 +31,49 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifacts
+          path: dist
+
+  unit-test:
+    runs-on: ubuntu-20.04
+    needs:
+      - build
+
+    steps:
+      - name: Get Code from Repository
+        uses: actions/checkout@v3
+
+      - name: Use Node.js v.18.
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.14.2'
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        id: cache-dependencies
+        with:
+          path: '**/node_modules'
+          key: npm-deps-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install Dependencies
+        if: ${{ steps.cache-dependencies.outputs.cache-hit != 'true' }}
+        run: npm ci
+
+      - name: Get Build Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifacts
+
       - name: Unit Test
         run: npm run test:ci
 
   e2e-test:
     runs-on: ubuntu-20.04
+    needs:
+      - build
 
     steps:
       - name: Get Code from Repository
@@ -59,6 +97,11 @@ jobs:
       - name: Install Dependencies
         if: ${{ steps.cache-dependencies.outputs.cache-hit != 'true' }}
         run: npm ci
+
+      - name: Get Build Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifacts
 
       - name: E2E Test
         run: npm run test:e2e

@@ -1,6 +1,3 @@
-require('ts-node').register({
-  transpileOnly: true,
-});
 import { dataSource } from './setup';
 
 const teardown = async () => {
