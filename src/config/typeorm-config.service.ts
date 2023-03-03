@@ -16,10 +16,7 @@ export class TypeormConfigService implements TypeOrmOptionsFactory {
       database: this.configService.get<string>('DB_NAME'),
       synchronize: process.env.NODE_ENV === 'development',
       logging: process.env.NODE_ENV === 'development',
-      entities:
-        process.env.NODE_ENV !== 'test'
-          ? ['dist/entities/*.entity.js']
-          : ['src/entities/*.entity.ts'],
+      entities: ['dist/src/entities/*.entity.js'],
       connectTimeoutMS: 0,
       poolSize: 0,
       useUTC: false,
