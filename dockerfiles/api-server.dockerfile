@@ -15,4 +15,6 @@ ENV PORT=${DEFAULT_PORT}
 
 EXPOSE $PORT
 
-# docker run -d --rm -p 8000:8000 --name api-server -v /app/node_modules --build-arg DEFAULT_PORT=8000 --env-file ./.env.production 
+CMD [ "npm", "start:dev" ]
+
+# docker run -d --rm -p 8000:8000 --name api-server -v /app/node_modules --build-arg DEFAULT_PORT=8000 --env-file ./.env.production
