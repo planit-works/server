@@ -1,4 +1,4 @@
-name: Planit Server CI
+name: Planit Server CD
 
 on:
   push:
@@ -16,3 +16,22 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18.14.2'
+
+      - run: docker build -t farenheim7/planit-dev-server:latest -f dockerfiles/api-server.dockerfile .
+
+      - run: echo "${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}" | docker login -u ${{ secrets.DOCKER_HUB_USERNAME}} --password stdin
+
+      - run: docker push farenheim7/planit-dev-server:latest
+
+      - name: SSH to AWS EC2
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SECRET }}
+          port: ${{ secrets.EC2_PORT }}
+          script: |
+            echo "${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}" | docker login -u ${{ secrets.DOCKER_HUB_USERNAME}} --password stdin
+            docker stop planit-server && docker rm planit-server
+            docker image rm farenheim7/planit-server:latest
+            docker run --rm -dp 8000:8000 --name planit-server --env-file ./server/.env.development farenheim7/planit-dev-server:latest
