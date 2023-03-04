@@ -19,7 +19,7 @@ jobs:
 
       - run: docker build -t farenheim7/planit-dev-server:latest -f dockerfiles/api-server.dockerfile .
 
-      - run: echo "${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}" | docker login -u ${{ secrets.DOCKER_HUB_USERNAME}} --password stdin
+      - run: echo "${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}" | docker login -u ${{ secrets.DOCKER_HUB_USERNAME}} --password-stdin
 
       - run: docker push farenheim7/planit-dev-server:latest
 
