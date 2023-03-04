@@ -30,6 +30,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SECRET }}
           port: ${{ secrets.EC2_PORT }}
+          passphrase: ${{ secrets.EC2_PASSPHRASE }}
           script: |
             echo "${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}" | docker login -u ${{ secrets.DOCKER_HUB_USERNAME}} --password stdin
             docker stop planit-server && docker rm planit-server
