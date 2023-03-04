@@ -33,6 +33,4 @@ jobs:
           passphrase: ${{ secrets.EC2_PASSPHRASE }}
           script: |
             echo "${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}" | docker login -u ${{ secrets.DOCKER_HUB_USERNAME}} --password-stdin
-            docker stop planit-server && docker rm planit-server
-            docker image rm farenheim7/planit-server:latest
             docker run --rm -dp 8000:8000 --name planit-server --env-file ./server/.env.development farenheim7/planit-dev-server:latest
