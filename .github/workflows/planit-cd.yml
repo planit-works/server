@@ -18,7 +18,7 @@ jobs:
           node-version: '18.14.2'
 
       - name: Create .env file
-        run: echo "${{ secrets.ENV_DEVELOPMENT }} >> .env.development
+        run: echo "${{ secrets.ENV_DEVELOPMENT }}" >> .env.development
 
       - run: docker build -t farenheim7/planit-dev-server:latest -f dockerfiles/api-server.dockerfile .
 
