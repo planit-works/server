@@ -7,7 +7,7 @@ import {
   CreateUserOutboundPort,
   CreateUserOutboundPortInputDto,
 } from '../outbound-port/create-user.outbound-port';
-import { Connection } from 'typeorm';
+import { DataSource } from 'typeorm';
 import { Password } from '../../entities/password.entity';
 
 @Injectable()
@@ -17,12 +17,12 @@ export class CreateUserRepository implements CreateUserOutboundPort {
     @InjectRepository(Profile) private profileRepository: Repository<Profile>,
     @InjectRepository(Password)
     private passwordRepository: Repository<Password>,
-    private connection: Connection,
+    private dataSource: DataSource,
   ) {}
 
   async execute(params: CreateUserOutboundPortInputDto): Promise<User> {
     const { email, password, randomNickname: nickname } = params;
-    const queryRunner = this.connection.createQueryRunner();
+    const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
     let user = this.userRepository.create({ email });

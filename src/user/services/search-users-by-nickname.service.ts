@@ -8,6 +8,7 @@ import { SearchUsersByNicknameOutboundPort } from '../outbound-port/search-users
 import { SearchUsersByNicknameRepository } from '../outbound-adapter/search-users-by-nickname.repository';
 import { CheckFollowingOutboundPort } from '../outbound-port/check-following.outbound-port';
 import { CheckFollowingRepository } from '../outbound-adapter/check-following.repository';
+import { pipe, map, toArray, countBy } from '@fxts/core';
 
 @Injectable()
 export class SearchUsersByNicknameService
@@ -27,19 +28,22 @@ export class SearchUsersByNicknameService
     const profiles = await this.searchUsersByNicknameOutboundPort.execute(
       nickname,
     );
-    const followingIds = profiles.map((profile) => profile.user.id);
+    const followingIds = pipe(
+      map((profile) => profile.user.userId, profiles),
+      toArray,
+    );
     const follows = await this.checkFollowingOutboundPort.execute({
       followerId: userId,
       followingIds,
     });
-    const followingUsers = follows.map((follow) => follow.followingId);
+    const followingUsers = countBy((follow) => follow.followingId, follows);
     return profiles.map((profile) => ({
-      id: profile.id,
-      userId: profile.user.id,
+      profileId: profile.profileId,
+      userId: profile.user.userId,
       nickname: profile.nickname,
-      avatarUrl: profile.avatarUrl,
+      avatarUrl: profile.image.url,
       bio: profile.bio,
-      isFollowing: followingUsers.includes(profile.user.id),
+      isFollowing: Boolean(followingUsers[profile.user.userId]),
     }));
   }
 }
