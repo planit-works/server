@@ -90,7 +90,7 @@ jobs:
 
       - name: Cache dependencies
         uses: actions/cache@v3
-        id: cache
+        id: cache-dependencies
         with:
           path: '**/node_modules'
           key: npm-deps-${{ hashFiles('**/package-lock.json') }}
