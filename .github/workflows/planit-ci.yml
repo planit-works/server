@@ -105,5 +105,8 @@ jobs:
           name: build-artifacts
           path: dist/
 
+      - name: Create .env file
+        run: echo "${{ secrets.ENV_TEST }} >> .env.test
+
       - name: E2E Test
         run: npm run test:e2e
