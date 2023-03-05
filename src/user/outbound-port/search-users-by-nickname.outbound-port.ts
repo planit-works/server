@@ -1,11 +1,13 @@
 export interface SearchUsersByNicknameOutboundPortOutputDto {
-  id: number;
+  profileId: number;
   user: {
-    id: number;
+    userId: number;
   };
   nickname: string;
   bio: string;
-  avatarUrl: string;
+  image: {
+    url: string;
+  };
 }
 
 export interface SearchUsersByNicknameOutboundPort {

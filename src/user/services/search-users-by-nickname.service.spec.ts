@@ -8,6 +8,7 @@ import {
 } from '../outbound-port/check-following.outbound-port';
 import { Follow } from '../../entities/follow.entity';
 import { SearchUsersByNicknameService } from './search-users-by-nickname.service';
+import { countBy } from '@fxts/core';
 
 class MockSearchUsersByNicknameOutboundPort
   implements SearchUsersByNicknameOutboundPort
@@ -21,8 +22,8 @@ class MockSearchUsersByNicknameOutboundPort
   ): Promise<SearchUsersByNicknameOutboundPortOutputDto[]> {
     const regex = new RegExp(`^${nickname}`);
     return Promise.resolve(
-      this.profiles.filter((profiles) =>
-        profiles.nickname.match(regex),
+      this.profiles.filter((profile) =>
+        profile.nickname.match(regex),
       ) as SearchUsersByNicknameOutboundPortOutputDto[],
     );
   }
@@ -34,12 +35,16 @@ class MockCheckFollowingOutboundPort implements CheckFollowingOutboundPort {
   }
   async execute(params: CheckFollowingOutboundPortInputDto): Promise<Follow[]> {
     const { followerId, followingIds } = params;
+    const followingUsers = countBy(
+      (followingUser) => followingUser,
+      followingIds,
+    );
 
     return Promise.resolve(
       this.follows.filter(
         (follow) =>
           follow.followerId === followerId &&
-          followingIds.includes(follow.followingId),
+          followingUsers[follow.followingId],
       ),
     );
   }
@@ -52,32 +57,32 @@ describe('SearchUsersByNicknameService Unit Test', () => {
   beforeEach(() => {
     profiles = [
       {
-        id: 1,
-        user: { id: 1 },
+        profileId: 1,
+        user: { userId: 1 },
         nickname: 'mars123',
         bio: 'hi!',
-        avatarUrl: 'avatars/1234',
+        image: { url: 'avatars/1234' },
       },
       {
-        id: 2,
-        user: { id: 2 },
+        profileId: 2,
+        user: { userId: 2 },
         nickname: 'mars1234',
         bio: 'hi!',
-        avatarUrl: 'avatars/1234',
+        image: { url: 'avatars/1234' },
       },
       {
-        id: 3,
-        user: { id: 3 },
+        profileId: 3,
+        user: { userId: 3 },
         nickname: 'mars12345',
         bio: 'hi!',
-        avatarUrl: 'avatars/1234',
+        image: { url: 'avatars/1234' },
       },
       {
-        id: 4,
-        user: { id: 4 },
+        profileId: 4,
+        user: { userId: 4 },
         nickname: 'mars1231',
         bio: 'hi!',
-        avatarUrl: 'avatars/1234',
+        image: { url: 'avatars/1234' },
       },
     ];
 

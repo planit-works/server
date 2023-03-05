@@ -17,6 +17,9 @@ jobs:
         with:
           node-version: '18.14.2'
 
+      - name: Create .env file
+        run: echo "${{ secrets.ENV_DEVELOPMENT }} >> .env.development
+
       - run: docker build -t farenheim7/planit-dev-server:latest -f dockerfiles/api-server.dockerfile .
 
       - run: echo "${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}" | docker login -u ${{ secrets.DOCKER_HUB_USERNAME}} --password-stdin
@@ -33,4 +36,6 @@ jobs:
           passphrase: ${{ secrets.EC2_PASSPHRASE }}
           script: |
             echo "${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}" | docker login -u ${{ secrets.DOCKER_HUB_USERNAME}} --password-stdin
-            docker run --rm -dp 8000:8000 --name planit-server --env-file ./server/.env.development farenheim7/planit-dev-server:latest
+            docker stop planit-server
+            docker image rm farenheim7/planit-dev-server:latest
+            docker run --rm -dp 8000:8000 --name planit-server farenheim7/planit-dev-server:latest

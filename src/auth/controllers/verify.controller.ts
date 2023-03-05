@@ -1,4 +1,4 @@
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Controller, Get, HttpCode, UseGuards } from '@nestjs/common';
 import { Serialize } from '../../common/interceptors/serialize.interceptor';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
@@ -14,6 +14,7 @@ export class AuthVerifyController {
     description: '로그인 확인 성공',
     type: VerifyResDto,
   })
+  @ApiTags('Auth')
   @Get('verify')
   @UseGuards(AuthGuard())
   @HttpCode(200)

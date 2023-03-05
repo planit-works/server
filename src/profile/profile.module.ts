@@ -13,10 +13,11 @@ import { GetProfileByUserIdRepository } from './outbound-adapter/get-profile-by-
 import { GetFollowCountRepository } from './outbound-adapter/get-follow-count.repository';
 import { CheckNicknameDuplicateRepository } from './outbound-adapter/check-nickname-duplicate.repository';
 import { CheckFollowingRepository } from '../follow/outbound-adapter/check-following.repository';
+import { Image } from '../entities/image.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Profile, User, Follow]),
+    TypeOrmModule.forFeature([Profile, User, Follow, Image]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
   ],
   controllers: [UpdateProfileController, GetProfileByUserIdController],

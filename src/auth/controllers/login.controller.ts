@@ -4,7 +4,7 @@ import {
 } from '../inbound-port/login.inbound-port';
 import { Controller, Post, Body, HttpCode, Res, Inject } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { LoginService } from '../services/login.service';
 import { LoginReqDto, LoginResDto } from '../dtos';
@@ -21,6 +21,7 @@ export class LoginController {
 
   @ApiOperation({ summary: '로그인' })
   @ApiResponse({ status: 200, description: '로그인 성공', type: LoginResDto })
+  @ApiTags('Auth')
   @Post('login')
   @HttpCode(200)
   @Serialize(LoginResDto)

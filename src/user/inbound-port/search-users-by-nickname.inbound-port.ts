@@ -4,7 +4,7 @@ export interface SearchUsersByNicknameInboundPortInputDto {
 }
 
 export interface SearchUsersByNicknameInboundPortOutputDto {
-  id: number;
+  profileId: number;
   userId: number;
   isFollowing: boolean;
   nickname: string;

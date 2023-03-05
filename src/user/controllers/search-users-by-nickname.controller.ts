@@ -7,7 +7,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { SearchUsersByNicknameService } from '../services/search-users-by-nickname.service';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import {
@@ -28,6 +28,7 @@ export class SearchUsersByNicknameController {
     summary: '닉네임으로 유저 검색',
   })
   @ApiResponse({ status: 200, description: '검색 성공' })
+  @ApiTags('User')
   @Get()
   @UseGuards(AuthGuard())
   @HttpCode(200)

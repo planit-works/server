@@ -12,7 +12,7 @@ import {
   GetProfileByUserIdInboundPortOutputDto,
 } from '../inbound-port/get-profile-by-user-id.inbound-port';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { GetProfileByUserIdReqDto } from '../dtos/get-profile-by-user-id.req.dto';
 import { GetProfileByUserIdResDto } from '../dtos/get-profile-by-user-id.res.dto';
@@ -31,6 +31,7 @@ export class GetProfileByUserIdController {
     description: '프로필 조회 성공',
     type: GetProfileByUserIdResDto,
   })
+  @ApiTags('Profile')
   @Post()
   @UseGuards(AuthGuard())
   @HttpCode(200)

@@ -1,5 +1,9 @@
 # Docker
-Dockerfile
+dockerfiles
+docker-compose.yml
+
+# Environment
+.env.test
 
 # Compliled Output
 node_modules
@@ -7,6 +11,7 @@ dist
 
 # Git
 .git
+.github
 
 # Test
 coverage

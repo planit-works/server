@@ -90,7 +90,7 @@ jobs:
 
       - name: Cache dependencies
         uses: actions/cache@v3
-        id: cache
+        id: cache-dependencies
         with:
           path: '**/node_modules'
           key: npm-deps-${{ hashFiles('**/package-lock.json') }}
@@ -104,6 +104,9 @@ jobs:
         with:
           name: build-artifacts
           path: dist/
+
+      - name: Create .env file
+        run: echo "${{ secrets.ENV_TEST }}" >> .env.test
 
       - name: E2E Test
         run: npm run test:e2e
