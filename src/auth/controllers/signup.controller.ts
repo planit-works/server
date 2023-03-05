@@ -1,6 +1,6 @@
 import { JwtService } from '@nestjs/jwt';
 import { Controller, Post, Body, Res, Inject } from '@nestjs/common';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { SignupService } from '../services';
 import { SignupReqDto, SignupResDto } from '../dtos';
 import { Serialize } from '../../common/interceptors/serialize.interceptor';
@@ -25,6 +25,7 @@ export class SignupController {
     description: '회원가입 성공',
     type: SignupResDto,
   })
+  @ApiTags('Auth')
   @Post()
   @Serialize(SignupResDto)
   async signup(

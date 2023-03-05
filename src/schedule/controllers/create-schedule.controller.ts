@@ -4,7 +4,7 @@ import {
   CreateScheduleInboundPort,
   CreateScheduleInboundPortOutputDto,
 } from '../inbound-port/create-schedule.inboud-port';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateScheduleReqDto } from '../dtos/create-schedule.req.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { TokenPayload } from '../../common/types/token-payload';
@@ -19,6 +19,7 @@ export class CreateScheduleController {
 
   @ApiOperation({ summary: '스케줄 생성' })
   @ApiResponse({ status: 201 })
+  @ApiTags('Schedule')
   @UseGuards(AuthGuard())
   @Post()
   async createSchedule(

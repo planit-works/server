@@ -10,7 +10,7 @@ import { UnfollowService } from '../services/unfollow.service';
 import { AuthGuard } from '@nestjs/passport';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { UnfollowReqDto } from '../dtos/unfollow.req.dto';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UnfollowInboundPort } from '../inbound-port/unfollow.inbound-port';
 import { TokenPayload } from '../../common/types/token-payload';
 
@@ -22,6 +22,7 @@ export class UnfollowController {
 
   @ApiOperation({ summary: '언팔로우' })
   @ApiResponse({ status: 204, description: '언팔로우 성공' })
+  @ApiTags('Follow')
   @Delete()
   @UseGuards(AuthGuard())
   @HttpCode(204)

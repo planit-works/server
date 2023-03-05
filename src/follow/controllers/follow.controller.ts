@@ -11,7 +11,7 @@ import { FollowService } from '../services/follow.service';
 import { FollowReqDto } from '../dtos/follow.req.dto';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { TokenPayload } from '../../common/types/token-payload';
 
 @Controller('api/follow')
@@ -22,6 +22,7 @@ export class FollowController {
 
   @ApiOperation({ summary: '팔로우' })
   @ApiResponse({ status: 204, description: '팔로우 성공' })
+  @ApiTags('Follow')
   @Post()
   @UseGuards(AuthGuard())
   @HttpCode(204)
