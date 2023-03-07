@@ -46,7 +46,7 @@ export class SignupService implements SignupInboundPort {
     const user = await this.createUserOutboundPort.execute({
       email,
       password: hashedPassword,
-      randomNickname,
+      nickname: randomNickname,
     });
     return {
       userId: user.userId,
