@@ -1,9 +1,9 @@
-import { User } from '../../entities/user.entity';
+import { User } from '../../entities';
 
 export interface CreateUserOutboundPortInputDto {
   email: string;
   password: string;
-  randomNickname: string;
+  nickname: string;
 }
 
 export interface CreateUserOutboundPort {

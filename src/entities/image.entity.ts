@@ -12,7 +12,7 @@ export class Image {
   @PrimaryGeneratedColumn()
   imageId: number;
 
-  @Column({ type: 'varchar', length: 30, nullable: false })
+  @Column({ type: 'varchar', length: 255, nullable: false })
   url: string;
 
   @DeleteDateColumn({ nullable: true })
