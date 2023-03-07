@@ -41,8 +41,8 @@ export class LoginController {
     });
     response.cookie('Authorization', accessToken, {
       httpOnly: true,
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'none',
+      secure: true,
     });
     return user;
   }

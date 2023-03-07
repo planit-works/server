@@ -24,7 +24,7 @@ export class FollowController {
   @ApiResponse({ status: 204, description: '팔로우 성공' })
   @ApiTags('Follow')
   @Post()
-  @UseGuards(AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
   @HttpCode(204)
   async follow(
     @CurrentUser('user') currentUser: TokenPayload,

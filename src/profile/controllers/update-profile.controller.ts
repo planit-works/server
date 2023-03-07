@@ -26,7 +26,7 @@ export class UpdateProfileController {
   @ApiResponse({ status: 204, description: '프로필 업데이트 성공' })
   @ApiTags('Profile')
   @Patch()
-  @UseGuards(AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
   @HttpCode(204)
   updateProfile(
     @CurrentUser('user') currentUser: TokenPayload,

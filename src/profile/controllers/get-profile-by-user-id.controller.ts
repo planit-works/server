@@ -33,7 +33,7 @@ export class GetProfileByUserIdController {
   })
   @ApiTags('Profile')
   @Post()
-  @UseGuards(AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
   @HttpCode(200)
   getProfileByUserId(
     @CurrentUser('user') currentUser: TokenPayload,

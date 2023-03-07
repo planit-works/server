@@ -16,7 +16,7 @@ export class AuthVerifyController {
   })
   @ApiTags('Auth')
   @Get('verify')
-  @UseGuards(AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
   @HttpCode(200)
   @Serialize(VerifyResDto)
   async login(@CurrentUser('user') currentUser: TokenPayload) {
