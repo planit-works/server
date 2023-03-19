@@ -1,5 +1,4 @@
 import { Profile } from '../entities/profile.entity';
-import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
 import { UpdateProfileController } from './controllers/update-profile.controller';
@@ -16,10 +15,7 @@ import { CheckFollowingRepository } from '../follow/outbound-adapter/check-follo
 import { Image } from '../entities/image.entity';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Profile, User, Follow, Image]),
-    PassportModule.register({ defaultStrategy: 'jwt' }),
-  ],
+  imports: [TypeOrmModule.forFeature([Profile, User, Follow, Image])],
   controllers: [UpdateProfileController, GetProfileByUserIdController],
   providers: [
     UpdateProfileService,

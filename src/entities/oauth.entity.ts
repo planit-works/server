@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { User } from './user.entity';
 
 enum OauthProvider {
   GOOGLE = 'google',
@@ -9,6 +16,13 @@ enum OauthProvider {
 export class Oauth {
   @PrimaryGeneratedColumn()
   oauthId: number;
+
+  @Column()
+  userId?: number;
+
+  @OneToOne(() => User, (user) => user.oauth)
+  @JoinColumn({ name: 'userId' })
+  user?: User;
 
   @Column({ enum: [OauthProvider.GOOGLE, OauthProvider.KAKAO] })
   provider: string;

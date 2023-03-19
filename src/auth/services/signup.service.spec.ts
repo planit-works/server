@@ -1,6 +1,6 @@
 import { SignupService } from './signup.service';
 import { ConflictException } from '@nestjs/common';
-import { User } from '../../entities/user.entity';
+import { User } from '../../entities';
 import * as bcrypt from 'bcrypt';
 import {
   CreateUserOutboundPort,

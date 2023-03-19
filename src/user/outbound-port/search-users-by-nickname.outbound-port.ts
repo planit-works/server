@@ -1,17 +1,15 @@
-export interface SearchUsersByNicknameOutboundPortOutputDto {
-  profileId: number;
-  user: {
-    userId: number;
-  };
+import { Profile } from '../../entities';
+
+export interface SearchUsersByNicknameOutboundPortInputDto {
   nickname: string;
-  bio: string;
-  image: {
-    url: string;
-  };
+  limit: number;
+  skip: number;
+  order: string;
+  sortBy: string;
 }
 
 export interface SearchUsersByNicknameOutboundPort {
   execute(
-    nickname: string,
-  ): Promise<SearchUsersByNicknameOutboundPortOutputDto[]>;
+    params: SearchUsersByNicknameOutboundPortInputDto,
+  ): Promise<Profile[]>;
 }

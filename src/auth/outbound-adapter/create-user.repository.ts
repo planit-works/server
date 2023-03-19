@@ -1,5 +1,3 @@
-import { Profile } from '../../entities/profile.entity';
-import { User } from '../../entities/user.entity';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -8,7 +6,7 @@ import {
   CreateUserOutboundPortInputDto,
 } from '../outbound-port/create-user.outbound-port';
 import { DataSource } from 'typeorm';
-import { Password } from '../../entities/password.entity';
+import { User, Profile, Password } from '../../entities';
 
 @Injectable()
 export class CreateUserRepository implements CreateUserOutboundPort {
@@ -21,10 +19,10 @@ export class CreateUserRepository implements CreateUserOutboundPort {
   ) {}
 
   async execute(params: CreateUserOutboundPortInputDto): Promise<User> {
-    const { email, password, randomNickname: nickname } = params;
+    const { email, password, nickname } = params;
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
-    await queryRunner.startTransaction();
+    await queryRunner.startTransaction('SERIALIZABLE');
     let user = this.userRepository.create({ email });
     const passwordEntity = this.passwordRepository.create({ password });
     let profile = this.profileRepository.create({ nickname });

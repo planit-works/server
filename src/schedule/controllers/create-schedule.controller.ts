@@ -20,7 +20,7 @@ export class CreateScheduleController {
   @ApiOperation({ summary: '스케줄 생성' })
   @ApiResponse({ status: 201 })
   @ApiTags('Schedule')
-  @UseGuards(AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
   @Post()
   async createSchedule(
     @Body() body: CreateScheduleReqDto,

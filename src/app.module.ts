@@ -34,7 +34,7 @@ import { ScheduleModule } from './schedule/schedule.module';
   providers: [
     {
       provide: APP_PIPE,
-      useValue: new ValidationPipe({ whitelist: true }),
+      useValue: new ValidationPipe({ whitelist: true, transform: true }),
     },
   ],
 })

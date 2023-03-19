@@ -1,15 +1,12 @@
-import { TokenPayload } from '../common/types/token-payload';
+import { TokenPayload } from '../../common/types/token-payload';
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import {
-  GetUserByIdOutboundPort,
-  GetUserByIdOutboundPortOutputDto,
-} from './outbound-port/get-user-by-id.outbound-port';
-import { GetUserByIdRepository } from './outbound-adapter/get-user-by-id.repository';
+import { GetUserByIdOutboundPort } from '../outbound-port/get-user-by-id.outbound-port';
+import { GetUserByIdRepository } from '../outbound-adapter/get-user-by-id.repository';
 
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy) {
+export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   constructor(
     @Inject(GetUserByIdRepository)
     private getUserByIdRepository: GetUserByIdOutboundPort,

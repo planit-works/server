@@ -14,7 +14,7 @@ import {
   SearchUsersByNicknameInboundPort,
   SearchUsersByNicknameInboundPortOutputDto,
 } from '../inbound-port/search-users-by-nickname.inbound-port';
-import { SearchUsersByEmailReqQueryDto } from '../dtos/search-users-by-email.req.query.dto';
+import { SearchUsersByNicknameReqQueryDto } from '../dtos/search-users-by-email.req.query.dto';
 import { TokenPayload } from '../../common/types/token-payload';
 
 @Controller('api/users')
@@ -30,15 +30,16 @@ export class SearchUsersByNicknameController {
   @ApiResponse({ status: 200, description: '검색 성공' })
   @ApiTags('User')
   @Get()
-  @UseGuards(AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
   @HttpCode(200)
   async searchUsersByNickname(
     @CurrentUser('user') currentUser: TokenPayload,
-    @Query() query: SearchUsersByEmailReqQueryDto,
-  ): Promise<SearchUsersByNicknameInboundPortOutputDto[]> {
-    const { q: nickname } = query;
+    @Query() searchUsersByNicknameReqQueryDto: SearchUsersByNicknameReqQueryDto,
+  ): Promise<SearchUsersByNicknameInboundPortOutputDto> {
+    const { q: nickname } = searchUsersByNicknameReqQueryDto;
     return this.searchUsersByEmailInboundPort.execute({
       userId: currentUser.userId,
+      paginationOptions: searchUsersByNicknameReqQueryDto,
       nickname,
     });
   }

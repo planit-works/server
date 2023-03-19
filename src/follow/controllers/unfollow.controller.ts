@@ -24,7 +24,7 @@ export class UnfollowController {
   @ApiResponse({ status: 204, description: '언팔로우 성공' })
   @ApiTags('Follow')
   @Delete()
-  @UseGuards(AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
   @HttpCode(204)
   async unfollow(
     @CurrentUser('user') currentUser: TokenPayload,

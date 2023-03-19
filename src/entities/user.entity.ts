@@ -12,6 +12,7 @@ import {
   Index,
 } from 'typeorm';
 import { Password } from './password.entity';
+import { Oauth } from './oauth.entity';
 
 @Entity()
 export class User {
@@ -40,6 +41,9 @@ export class User {
 
   @OneToOne(() => Password, (password) => password.user)
   password?: Password;
+
+  @OneToOne(() => Oauth, (oauth) => oauth.user)
+  oauth?: Oauth;
 
   @OneToMany(() => Follow, (follow) => follow.following)
   following?: Follow[];
