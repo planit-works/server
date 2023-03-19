@@ -1,4 +1,4 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import {
   GoogleLoginInboundPort,
   GoogleLoginInboundPortInputDto,
@@ -38,7 +38,7 @@ export class GoogleLoginService implements GoogleLoginInboundPort {
       };
     }
     if (user && user.password) {
-      throw new BadRequestException('Local User');
+      return null;
     }
     let randomNickname = createRandomNickname();
     let isNicknameDuplicate =

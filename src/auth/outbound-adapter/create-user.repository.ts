@@ -22,7 +22,7 @@ export class CreateUserRepository implements CreateUserOutboundPort {
     const { email, password, nickname } = params;
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
-    await queryRunner.startTransaction();
+    await queryRunner.startTransaction('SERIALIZABLE');
     let user = this.userRepository.create({ email });
     const passwordEntity = this.passwordRepository.create({ password });
     let profile = this.profileRepository.create({ nickname });

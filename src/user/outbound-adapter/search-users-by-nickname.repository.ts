@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import {
   SearchUsersByNicknameOutboundPort,
-  SearchUsersByNicknameOutboundPortOutputDto,
+  SearchUsersByNicknameOutboundPortInputDto,
 } from '../outbound-port/search-users-by-nickname.outbound-port';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Like, Repository } from 'typeorm';
-import { Profile } from '../../entities/profile.entity';
+import { Profile } from '../../entities';
 
 @Injectable()
 export class SearchUsersByNicknameRepository
@@ -15,10 +15,10 @@ export class SearchUsersByNicknameRepository
     @InjectRepository(Profile) private profileRepository: Repository<Profile>,
   ) {}
   async execute(
-    nickname: string,
-  ): Promise<SearchUsersByNicknameOutboundPortOutputDto[]> {
-    return (await this.profileRepository.find({
-      where: { nickname: Like(`${nickname}%`) },
+    params: SearchUsersByNicknameOutboundPortInputDto,
+  ): Promise<Profile[]> {
+    return await this.profileRepository.find({
+      where: { nickname: Like(`${params.nickname}%`) },
       relations: { user: true },
       select: {
         profileId: true,
@@ -27,6 +27,8 @@ export class SearchUsersByNicknameRepository
         bio: true,
         user: { userId: true },
       },
-    })) as unknown as SearchUsersByNicknameOutboundPortOutputDto[];
+      skip: params.skip,
+      take: params.limit,
+    });
   }
 }
