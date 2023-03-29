@@ -2,11 +2,11 @@ import { MockCheckUserExistOutboundPort } from './follow.service.spec';
 import {
   UnfollowOutboundPort,
   UnfollowOutboundPortInputDto,
-} from '../outbound-port/unfollow.outbount-port';
-import { Follow } from '../../entities/follow.entity';
+} from '../../../../src/follow/outbound-port/unfollow.outbount-port';
+import { Follow } from '../../../../src/entities/follow.entity';
 import { BadRequestException } from '@nestjs/common';
-import { UnfollowService } from './unfollow.service';
-import { User } from '../../entities/user.entity';
+import { UnfollowService } from '../../../../src/follow/services/unfollow.service';
+import { User } from '../../../../src/entities/user.entity';
 
 class MockUnfollowOutboundPort implements UnfollowOutboundPort {
   private follows: Partial<Follow>[];

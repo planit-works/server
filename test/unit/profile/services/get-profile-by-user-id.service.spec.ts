@@ -1,18 +1,18 @@
 import {
   GetProfileByUserIdOutboundPort,
   GetProfileByUserIdOutboundPortOutputDto,
-} from '../outbound-port/get-profile-by-user-id.outbound-port';
+} from '../../../../src/profile/outbound-port/get-profile-by-user-id.outbound-port';
 import {
   GetFollowCountOutboundPort,
   GetFollowCountOutboundPortOutputDto,
-} from '../outbound-port/get-follow-count.outbound-port';
-import { GetProfileByUserIdService } from './get-profile-by-user-id.service';
-import { Follow } from '../../entities/follow.entity';
+} from '../../../../src/profile/outbound-port/get-follow-count.outbound-port';
+import { GetProfileByUserIdService } from '../../../../src/profile/services/get-profile-by-user-id.service';
+import { Follow } from '../../../../src/entities/follow.entity';
 import { BadRequestException } from '@nestjs/common';
 import {
   CheckFollowingOutboundPort,
   CheckFollowingOutboundPortInputDto,
-} from '../../follow/outbound-port/check-following.outbound-port';
+} from '../../../../src/follow/outbound-port/check-following.outbound-port';
 
 class MockGetProfileByIdOutboundPort implements GetProfileByUserIdOutboundPort {
   constructor(private users: GetProfileByUserIdOutboundPortOutputDto[]) {

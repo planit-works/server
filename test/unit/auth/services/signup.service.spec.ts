@@ -1,13 +1,13 @@
-import { SignupService } from './signup.service';
+import { SignupService } from '../../../../src/auth/services/signup.service';
 import { ConflictException } from '@nestjs/common';
-import { User } from '../../entities';
+import { User } from '../../../../src/entities';
 import * as bcrypt from 'bcrypt';
 import {
   CreateUserOutboundPort,
   CreateUserOutboundPortInputDto,
-} from '../outbound-port/create-user.outbound-port';
-import { CheckEmailDuplicateOutboundPort } from '../outbound-port/check-email-duplicate.outbound-port';
-import { CheckNicknameDuplicateOutboundPort } from '../../profile/outbound-port/check-nickname-duplicate.outbound-port';
+} from '../../../../src/auth/outbound-port/create-user.outbound-port';
+import { CheckEmailDuplicateOutboundPort } from '../../../../src/auth/outbound-port/check-email-duplicate.outbound-port';
+import { CheckNicknameDuplicateOutboundPort } from '../../../../src/profile/outbound-port/check-nickname-duplicate.outbound-port';
 
 class MockCheckEmailDuplicateOutboundPort
   implements CheckEmailDuplicateOutboundPort

@@ -1,9 +1,9 @@
-import { User } from '../../entities/user.entity';
-import { CheckUserExistOutboundPort } from '../outbound-port/check-user-exist.outbound-port';
-import { FollowOutboundPort } from '../outbound-port/follow.outbound-port';
-import { FollowInboundPortInputDto } from '../inbound-port/follow.inbount-port';
-import { Follow } from '../../entities/follow.entity';
-import { FollowService } from './follow.service';
+import { User } from '../../../../src/entities/user.entity';
+import { CheckUserExistOutboundPort } from '../../../../src/follow/outbound-port/check-user-exist.outbound-port';
+import { FollowOutboundPort } from '../../../../src/follow/outbound-port/follow.outbound-port';
+import { FollowInboundPortInputDto } from '../../../../src/follow/inbound-port/follow.inbount-port';
+import { Follow } from '../../../../src/entities/follow.entity';
+import { FollowService } from '../../../../src/follow/services/follow.service';
 import { BadRequestException } from '@nestjs/common';
 
 export class MockCheckUserExistOutboundPort

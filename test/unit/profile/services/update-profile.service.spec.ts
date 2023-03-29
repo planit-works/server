@@ -1,8 +1,8 @@
 import {
   UpdateProfileOutboundPort,
   UpdateProfileOutboundPortInputDto,
-} from '../outbound-port/update-profile.outbound-port';
-import { UpdateProfileService } from './update-profile.service';
+} from '../../../../src/profile/outbound-port/update-profile.outbound-port';
+import { UpdateProfileService } from '../../../../src/profile/services/update-profile.service';
 
 class MockUpdateProfileOutboundPort implements UpdateProfileOutboundPort {
   execute(params: UpdateProfileOutboundPortInputDto): Promise<void> {

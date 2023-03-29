@@ -1,10 +1,10 @@
-import { CreateScheduleService } from './create-schedule.service';
-import { CheckYmdOutboundPort } from '../outbound-port/check-ymd.outbound-port';
+import { CreateScheduleService } from '../../../../src/schedule/services/create-schedule.service';
+import { CheckYmdOutboundPort } from '../../../../src/schedule/outbound-port/check-ymd.outbound-port';
 import {
   CreateScheduleOutboundPort,
   CreateScheduleOutboundPortInputDto,
-} from '../outbound-port/create-schedule.outbound-port';
-import { Schedule } from '../../entities/schedule.entity';
+} from '../../../../src/schedule/outbound-port/create-schedule.outbound-port';
+import { Schedule } from '../../../../src/entities/schedule.entity';
 
 class MockCheckYmdOutboundPort implements CheckYmdOutboundPort {
   async execute(ymd: string) {

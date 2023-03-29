@@ -1,8 +1,8 @@
 import {
   GetUserByEmailOutboundPort,
   GetUserByEmailOutboundPortOutputDto,
-} from '../outbound-port/get-user-by-email.outbound-port';
-import { LoginService } from './login.service';
+} from '../../../../src/auth/outbound-port/get-user-by-email.outbound-port';
+import { LoginService } from '../../../../src/auth/services/login.service';
 import { BadRequestException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 
